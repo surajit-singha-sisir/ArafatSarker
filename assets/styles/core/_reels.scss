@@ -1,0 +1,136 @@
+@use "sass:color";
+@use "variables" as *;
+
+// color: color.adjust($primary, $lightness: -60%);
+
+.reels {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  border: 1px solid #ccc;
+
+  .inner-reels {
+    position: relative;
+    margin: 0 auto;
+
+    .reels-samples {
+      width: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+
+      .chevron {
+        cursor: pointer;
+        font-size: 1.3rem;
+        border: 1px solid #ccc;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: $secondary;
+          color: $bg;
+          transition: all 0.3s ease;
+        }
+
+        &:first-child:hover {
+          transform: translateX(-2px);
+        }
+        &:last-child:hover {
+          transform: translateX(2px);
+        }
+      }
+
+      .all-reels {
+        width: 100%;
+        margin-top: 3rem;
+        height: auto;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+
+        .reel-container {
+          position: relative;
+          width: inherit;
+          display: flex;
+          gap: 1rem;
+          height: auto;
+
+          .reel {
+            position: relative;
+            width: 10rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            aspect-ratio: 2/4;
+            background-color: #f5f5f5;
+
+            .title {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 4rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              background-color: $slider;
+              color: $sub-sub-text;
+              border-top-left-radius: inherit;
+              border-top-right-radius: inherit;
+              padding: 0.6rem;
+              font-size: 0.8rem;
+              transition: all 0.3s ease;
+
+              &:hover {
+                background-color: color.adjust($slider, $lightness: 10%);
+                transition: all 0.3s ease;
+              }
+            }
+            .thumbnail {
+              position: absolute;
+              top: 4rem;
+              left: 0;
+              bottom: 0;
+              border-bottom-left-radius: inherit;
+              border-bottom-right-radius: inherit;
+              overflow: hidden;
+            }
+            .play-icon {
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, 0);
+              cursor: pointer;
+              transition: all 0.3s ease;
+
+              &:hover {
+                i {
+                  color: #ccc;
+                  transition: all 0.3s ease;
+                }
+              }
+
+              i {
+                color: #fff;
+                text-shadow: 0 2px 4px #0000009a;
+                font-size: 2rem;
+              }
+            }
+            .duration {
+              position: absolute;
+              color: $sub-sub-text;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              bottom: 0.5rem;
+              right: 0.5rem;
+              font-size: 0.7rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

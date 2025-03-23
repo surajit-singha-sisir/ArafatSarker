@@ -1,6 +1,6 @@
 <template>
     <header class="slider">
-        <div class="inner-slider">
+        <div class="inner-slider snap-y">
             <div class="video-container">
                 <video :class="{
                     'active': activeIndex === 0,

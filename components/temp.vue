@@ -1,44 +1,70 @@
 <template>
-  <div>
-    <video
-      ref="videoPlayer"
-      src="http://192.168.0.111:3000/media/arafat/close_up_shot_of_diya_oil_lamps_celebrating_festival_of_diwali_burning_in_the_dar_A92uIj0.mp4"
-      autoplay
-      muted
-      playsinline
-      loop
-    ></video>
-    <button @click="togglePlayPause">
-      {{ isPlaying ? 'Pause' : 'Play' }}
-    </button>
+  <div class="snap-y-container">
+    <div class="snap-y">
+      <section class="snap-item">
+        <h2>Section 1</h2>
+        <p>This is the first section. Scroll to the next one to see the snap effect.</p>
+      </section>
+      <section class="snap-item">
+        <h2>Section 2</h2>
+        <p>This is the second section. Keep scrolling!</p>
+      </section>
+      <section class="snap-item">
+        <h2>Section 3</h2>
+        <p>This is the third section. Almost there!</p>
+      </section>
+      <section class="snap-item">
+        <h2>Section 4</h2>
+        <p>This is the fourth section. You're doing great!</p>
+      </section>
+      <section class="snap-item">
+        <h2>Section 5</h2>
+        <p>This is the last section. Enjoy the view!</p>
+      </section>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
+<script setup>
+// This component doesn't need any specific logic for the basic scroll snap behavior.
+// You can add additional functionality here if needed in the future.
+</script>
 
-// Create a reference to the video element
-const videoPlayer = ref<HTMLVideoElement | null>(null)
-// Track playing state
-const isPlaying = ref(true) // Set to true since autoplay is enabled
-
-// Toggle play/pause functionality
-const togglePlayPause = () => {
-  if (videoPlayer.value) {
-    if (isPlaying.value) {
-      videoPlayer.value.pause()
-    } else {
-      videoPlayer.value.play()
-    }
-    isPlaying.value = !isPlaying.value
-  }
+<style scoped>
+.snap-y-container {
+  height: 100vh; /* Make the container the full height of the viewport */
+  overflow: hidden; /* Hide overflow to keep content inside */
 }
 
-// Optional: Ensure the video reference is properly set up when component mounts
-onMounted(() => {
-  if (videoPlayer.value) {
-    // Set initial state based on autoplay
-    isPlaying.value = !videoPlayer.value.paused
-  }
-})
-</script>
+.snap-y {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory; /* Enable vertical snap scrolling */
+  height: 100%; /* Full height to allow scrolling */
+}
+
+.snap-item {
+  height: 100lvh; /* Make each section take up the full height of the viewport */
+  scroll-snap-align: start; /* Snap to the start of each section */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid #ccc; /* Optional border between sections */
+  background-color: #f1f1f1;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #333;
+}
+</style>

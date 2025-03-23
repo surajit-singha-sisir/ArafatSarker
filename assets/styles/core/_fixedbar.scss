@@ -3,7 +3,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 // color: color.adjust($primary, $lightness: -60%);
+html {
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
 
+  section,
+  header {
+    scroll-snap-align: start;
+  }
+}
 body {
   font-family: "Inter", "Baloo Da 2", sans-serif;
   color: $text;
@@ -11,17 +19,12 @@ body {
 
 .snap-x {
   overflow-x: scroll;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
-
-  div,
-  span,
-  section,
-  aside {
-    scroll-snap-align: start;
-  }
 }
 .snap-y {
   overflow-y: scroll;
+  overflow-x: hidden;
   scroll-snap-type: y mandatory;
 
   div,
@@ -74,4 +77,8 @@ h5 {
       inset -4px -4px 10px rgba(255, 65, 108, 0.5);
     transition: all 0.3s ease;
   }
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
