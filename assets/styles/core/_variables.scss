@@ -1,4 +1,3 @@
-
 $text: #161616;
 $sub-text: #7c7c7c;
 $sub-sub-text: #afafaf;
@@ -12,11 +11,14 @@ $primary: #45cc5d;
 $div: #0e999e;
 $secondary: #0e999e;
 $warning: #f89148;
+$slider: #071827;
 $z-topest: 10;
 $z-toper: 9;
 $z-top: 8;
 $z-down: 5;
 $z-ground: -1;
+$slider-gredient: linear-gradient(90deg, #07182700 0%, #071827 50%, #07182700 100%);
+$slider-gredient2: linear-gradient(90deg, #55fff100 0%, #55FFF0 50%, #55fff100 100%);
 
 :root {
   --text: #161616;

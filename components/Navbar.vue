@@ -17,15 +17,15 @@
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/reels">REELS</NuxtLink>
+                    <NuxtLink class="linked" to="#reels">REELS</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/portfolio">PORTFOLIO</NuxtLink>
+                    <NuxtLink class="linked" to="#portfolio">PORTFOLIO</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/testimonial">TESTIMONIAL</NuxtLink>
+                    <NuxtLink class="linked" to="#testimonial">TESTIMONIAL</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
@@ -39,17 +39,19 @@
 
         </div>
 
-        <div class="a-bg" :class="{ active: isHamburger }"></div>
+        <div class="a-bg" :class="{ active: isHamburger }" @click="hamburger"></div>
+        <div class="a-bg2" :class="{ active: isHamburger }" @click="hamburger"></div>
 
     </nav>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-
 const isHamburger = ref(false);
 
 const hamburger = () => {
     isHamburger.value = !isHamburger.value;
 };
+
+
 </script>

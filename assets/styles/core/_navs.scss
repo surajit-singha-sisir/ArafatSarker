@@ -76,7 +76,6 @@ nav.nav {
   }
   .nav-links {
     position: relative;
-    overflow: hidden;
 
     .nav-link {
       position: relative;
@@ -93,7 +92,7 @@ nav.nav {
         position: relative;
         color: $text;
         text-decoration: none;
-        font-size: 1.1rem;
+        font-size: 1rem;
         transition: all 0.2s ease;
 
         &:hover {
@@ -120,21 +119,34 @@ nav.nav {
     }
   }
 }
-.a-bg {
+.a-bg,
+.a-bg2 {
   position: absolute;
   display: none;
   top: 4rem;
   left: 0;
-  transform: translateX(-200%);
   width: -webkit-fill-available;
   height: 100lvh;
-  background-color: #00000050;
   z-index: $z-down;
-  transition: all 0.3s ease;
+}
+.a-bg {
+  transform: translateX(-100%);
+  background-color: #00000050;
+  transition: all 0.4s ease;
 
   &.active {
     transform: translateX(-0%);
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+  }
+}
+.a-bg2 {
+  transform: translateX(-200%);
+  background-color: #00000050;
+  transition: all 0.5s ease;
+
+  &.active {
+    transform: translateX(-0%);
+    transition: all 0.5s ease;
   }
 }
 
@@ -152,13 +164,15 @@ nav.nav {
         gap: 1.5rem;
         background-color: $light;
         width: 100%;
-        left: -100%;
+        transform: translateX(-120%);
         top: 3.1rem;
         height: 100lvh;
+        overflow: hidden;
+        transition: all 0.5s ease;
 
         &.active {
-          left: -35%;
-          transition: all 0.3s ease;
+          transform: translateX(-35%);
+          transition: all 0.4s ease;
         }
 
         .nav-link {
@@ -176,7 +190,8 @@ nav.nav {
         }
       }
     }
-    .a-bg {
+    .a-bg,
+    .a-bg2 {
       display: block !important;
     }
   }
