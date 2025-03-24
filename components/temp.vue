@@ -1,70 +1,114 @@
 <template>
-  <div class="snap-y-container">
-    <div class="snap-y">
-      <section class="snap-item">
-        <h2>Section 1</h2>
-        <p>This is the first section. Scroll to the next one to see the snap effect.</p>
-      </section>
-      <section class="snap-item">
-        <h2>Section 2</h2>
-        <p>This is the second section. Keep scrolling!</p>
-      </section>
-      <section class="snap-item">
-        <h2>Section 3</h2>
-        <p>This is the third section. Almost there!</p>
-      </section>
-      <section class="snap-item">
-        <h2>Section 4</h2>
-        <p>This is the fourth section. You're doing great!</p>
-      </section>
-      <section class="snap-item">
-        <h2>Section 5</h2>
-        <p>This is the last section. Enjoy the view!</p>
-      </section>
+  <div class="reel-player-container">
+    <h1>{{ videoTitle }}</h1>
+
+    <!-- URL Input (optional, for testing) -->
+    <input v-model="videoUrl" placeholder="Enter Facebook Reel URL" @change="fetchVideoData" />
+
+    <!-- Loading State -->
+    <div v-if="loading" class="loading">Loading reel...</div>
+
+    <!-- Video Player -->
+    <div v-else-if="videoData && currentQuality" class="player-wrapper">
+      <VideoPlayer :src="currentQuality" :qualities="['hd', 'sd']" :initial-quality="quality" :muted="isMuted"
+        :autoplay="true" @error="handleVideoError" @loaded="onVideoLoaded" @quality-changed="setQuality" />
     </div>
+
+    <!-- Error Message -->
+    <p v-if="error" class="error-message">{{ error }}</p>
   </div>
 </template>
 
-<script setup>
-// This component doesn't need any specific logic for the basic scroll snap behavior.
-// You can add additional functionality here if needed in the future.
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import VideoPlayer from './VideoPlayer.vue'
+
+// Types
+interface VideoData {
+  title?: string
+  hd?: string
+  sd?: string
+}
+
+// Define props
+const props = defineProps<{
+  initialUrl?: string
+}>()
+
+// State
+const videoData = ref<VideoData | null>(null)
+const loading = ref(true)
+const error = ref<string | null>(null)
+const quality = ref<'hd' | 'sd'>('hd')
+const isMuted = ref(true)
+const videoUrl = ref('')
+
+// Computed
+const videoTitle = computed(() => videoData.value?.title || 'Reel Video')
+const currentQuality = computed(() => {
+  return quality.value === 'hd' ? videoData.value?.hd : videoData.value?.sd
+})
+
+// Methods
+const fetchVideoData = async () => {
+  const urlToFetch = videoUrl.value || 'https://www.facebook.com/share/r/1Bg6J1aj97/'
+  if (!urlToFetch) {
+    error.value = 'Please provide a video URL'
+    return
+  }
+
+  loading.value = true
+  error.value = null
+  try {
+    const response = await fetch(`/api/video?url=${encodeURIComponent(urlToFetch)}`)
+    const result = await response.json()
+    if (result.status === 'success') {
+      videoData.value = result.data
+    } else {
+      error.value = result.message || 'Failed to load reel'
+    }
+  } catch (err) {
+    error.value = 'Error fetching reel: ' + (err as Error).message
+  } finally {
+    loading.value = false
+  }
+}
+
+const setQuality = (newQuality: string) => {
+  // Type assertion to narrow the type to 'hd' | 'sd'
+  const validQuality = newQuality === 'hd' || newQuality === 'sd' ? newQuality : 'hd'
+  quality.value = validQuality
+}
+
+const handleVideoError = (message: string) => {
+  error.value = 'Video playback error: ' + message
+}
+
+const onVideoLoaded = () => {
+  // Optionally handle loaded state
+}
+
+// Lifecycle
+onMounted(() => {
+  videoUrl.value = props.initialUrl || ''
+  fetchVideoData()
+})
 </script>
 
 <style scoped>
-.snap-y-container {
-  height: 100vh; /* Make the container the full height of the viewport */
-  overflow: hidden; /* Hide overflow to keep content inside */
-}
-
-.snap-y {
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  scroll-snap-type: y mandatory; /* Enable vertical snap scrolling */
-  height: 100%; /* Full height to allow scrolling */
-}
-
-.snap-item {
-  height: 100lvh; /* Make each section take up the full height of the viewport */
-  scroll-snap-align: start; /* Snap to the start of each section */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.reel-player-container {
   padding: 20px;
-  border-bottom: 2px solid #ccc; /* Optional border between sections */
-  background-color: #f1f1f1;
+}
+
+.loading {
   text-align: center;
-  box-sizing: border-box;
 }
 
-h2 {
-  font-size: 2rem;
-  margin-bottom: 10px;
+.error-message {
+  color: red;
 }
 
-p {
-  font-size: 1.2rem;
-  color: #333;
+.player-wrapper {
+  position: relative;
 }
 </style>

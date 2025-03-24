@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
 
   css: [
-    '~/assets/styles/arafat-sarker.scss',
+    '~/assets/styles/arafat-sarker.scss'
     // 'https://cdn.jsdelivr.net/gh/surajit-singha-sisir/mastorsCDN@v1.1/mastorsIcons/mastorsIcons.css'
   ],
 
@@ -27,5 +27,6 @@ export default defineNuxtConfig({
     port: 3000
   },
 
-  modules: ['@nuxt/image']
+  modules: ['@nuxt/image'],
+  // plugins: ['kehem-tooltip'],
 })

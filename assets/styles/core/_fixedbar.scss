@@ -21,6 +21,7 @@ body {
   overflow-x: scroll;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
 .snap-y {
   overflow-y: scroll;

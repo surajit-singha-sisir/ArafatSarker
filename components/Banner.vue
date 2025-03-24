@@ -6,17 +6,20 @@
                     'active': activeIndex === 0,
                     'left': activeIndex > 0,
                     'right': activeIndex < 0
-                }" :src="`${BASE_URL}${banner?.video1}`" autoplay muted playsinline loop></video>
+                }" :src="`${BASE_URL}${banner?.video1}`" autoplay muted playsinline loop
+                    @contextmenu.prevent></video>
                 <video :class="{
                     'active': activeIndex === 1,
                     'left': activeIndex > 1,
                     'right': activeIndex < 1
-                }" :src="`${BASE_URL}${banner?.video2}`" autoplay muted playsinline loop></video>
+                }" :src="`${BASE_URL}${banner?.video2}`" autoplay muted playsinline loop
+                    @contextmenu.prevent></video>
                 <video :class="{
                     'active': activeIndex === 2,
                     'left': activeIndex > 2,
                     'right': activeIndex < 2
-                }" :src="`${BASE_URL}${banner?.video3}`" autoplay muted playsinline loop></video>
+                }" :src="`${BASE_URL}${banner?.video3}`" autoplay muted playsinline loop
+                    @contextmenu.prevent></video>
             </div>
             <div class="dark-bg"></div>
 
