@@ -4,7 +4,6 @@ export default defineNuxtConfig({
 
   css: [
     '~/assets/styles/arafat-sarker.scss'
-    // 'https://cdn.jsdelivr.net/gh/surajit-singha-sisir/mastorsCDN@v1.1/mastorsIcons/mastorsIcons.css'
   ],
 
   app: {

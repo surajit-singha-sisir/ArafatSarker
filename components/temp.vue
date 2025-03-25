@@ -1,9 +1,6 @@
 <template>
   <div class="reel-player-container">
-    <h1>{{ videoTitle }}</h1>
-
-    <!-- URL Input (optional, for testing) -->
-    <input v-model="videoUrl" placeholder="Enter Facebook Reel URL" @change="fetchVideoData" />
+    <p>{{ videoTitle }}</p>
 
     <!-- Loading State -->
     <div v-if="loading" class="loading">Loading reel...</div>
@@ -51,7 +48,7 @@ const currentQuality = computed(() => {
 
 // Methods
 const fetchVideoData = async () => {
-  const urlToFetch = videoUrl.value || 'https://www.facebook.com/share/r/1Bg6J1aj97/'
+  const urlToFetch = videoUrl.value || 'https://www.facebook.com/watch?v=504749452697358'
   if (!urlToFetch) {
     error.value = 'Please provide a video URL'
     return
@@ -98,6 +95,8 @@ onMounted(() => {
 <style scoped>
 .reel-player-container {
   padding: 20px;
+  max-width: 800px;
+  aspect-ratio: 2/3;
 }
 
 .loading {
