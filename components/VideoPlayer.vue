@@ -30,7 +30,7 @@
           </div>
           <span class="max-w--40 text-nowrap text--08">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span>
         </div>
-        <div class="f-start-center gap-10ś gap-newGap2">
+        <div class="f-start-center gap-10 gap-newGap2">
           <span class="cur-pointer" @click="togglePictureInPicture">
             <i class="text--09 m-images1"></i>
           </span>

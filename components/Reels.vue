@@ -3,31 +3,38 @@
         <div class="inner-reels res-container">
             <h2 class="text-center">Reels</h2>
             <section class="reels-samples">
-                <div class="bordered-circle chevron" @click="revealPreviousItem"><i class="m-chevron-left"></i></div>
+                <div class="bordered-circle chevron" @click="revealPreviousItem">
+                    <i class="m-chevron-left"></i>
+                </div>
                 <div class="all-reels">
                     <RevealAnimation>
-                        <div class="reel-container snap-x" data-direction="top" ref="reelContainer">
-                            <div class="reel" v-for="(reel, index) in Reels" :key="index">
+                        <div class="reel-container snap-x" :data-direction="randomDirection()" ref="reelContainer">
+                            <div class="reel" v-for="(reel, index) in Reels" :key="reel.id">
                                 <div class="title text-dotted-2">
-                                    <p class="text-dotted-2">{{ reel?.title }}</p>
+                                    <p>{{ reel.title }}</p>
                                 </div>
                                 <div class="thumbnail">
                                     <NuxtImg class="img h-full fit-cover" :src="`${URL}${reel.thumbnail}`"
-                                        :alt="reel.title" />
+                                        :alt="reel.title" @click="playReel(index)" />
                                 </div>
                                 <div class="play-icon" title="Play" @click="playReel(index)">
                                     <i class="m-play2"></i>
                                 </div>
                                 <div class="duration">
-                                    <NuxtLink target="_blank" :to="reel.reel_link"><i class="m-facebook4"></i>
+                                    <NuxtLink target="_blank" :to="reel.reel_link">
+                                        <i class="m-facebook4"></i>
                                     </NuxtLink>
                                 </div>
                             </div>
                         </div>
                     </RevealAnimation>
                 </div>
-                <div class="bordered-circle chevron" @click="revealNextItem"><i class="m-chevron-right"></i></div>
+                <div class="bordered-circle chevron" @click="revealNextItem">
+                    <i class="m-chevron-right"></i>
+                </div>
             </section>
+
+            <!-- Modal -->
             <ModalBox v-if="showModal" :is-open="showModal" @close="closeModal">
                 <template #main>
                     <VideoPlayer v-if="videoData && currentQuality && !videoError" :src="currentQuality"
@@ -42,17 +49,17 @@
                     </div>
                     <VideoLoading v-if="loading || videoError" class="video-skeleton" />
                 </template>
-
                 <template #related>
                     <div class="related-videos">
                         <h4>Related Videos</h4>
                         <div class="w-100 f-center-start f-col gap-10">
-                            <div v-for="(item, index) in Reels" :key="index"
+                            <div v-for="(item, index) in Reels" :key="item.id"
                                 class="f gap-10 video-border w-100 cur-pointer text-hov-u"
                                 @click="playRelatedReel(index)">
                                 <div class="col-1 border">
                                     <div class="w--60">
-                                        <NuxtImg class="img square center" :src="`${URL}${item.thumbnail}`" />
+                                        <NuxtImg class="img square center" :src="`${URL}${item.thumbnail}`"
+                                            :alt="item.title" />
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -63,6 +70,7 @@
                     </div>
                 </template>
             </ModalBox>
+            <NuxtLink to="/reels" class="btn btn-primary m-t-20">View All</NuxtLink>
         </div>
     </section>
 </template>
@@ -76,6 +84,10 @@ interface VideoData {
     title?: string
     hd?: string
     sd?: string
+}
+const randomDirection = () => {
+    const directions = ['left', 'right', 'top', 'bottom']
+    return directions[Math.floor(Math.random() * directions.length)]
 }
 
 interface Reel {

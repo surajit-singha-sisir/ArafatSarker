@@ -9,7 +9,7 @@
   transform: translate(-50%, -50%);
   width: 100vw;
   height: 100vh;
-  z-index: $z-top;
+  z-index: $z-topest;
   overflow: hidden;
 
   &::after {
@@ -19,8 +19,9 @@
   .inner-modal-box {
     position: relative;
     display: flex;
-    width: 90vw;
-    height: 90vh;
+    width: 90%;
+    height: 80%;
+    margin-top: 1rem;
     border-right: 1px solid #444;
     background-color: $slider;
     padding: 1.5rem;
@@ -28,7 +29,7 @@
     z-index: $z-topest;
 
     @media screen and (max-width: 768px) {
-      margin: 0 auto;
+      margin-top: 2rem;
       height: 80%;
       background-color: #00000050;
       border: none;

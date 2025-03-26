@@ -1,0 +1,79 @@
+@use "sass:color";
+@use "variables" as *;
+
+footer.footer-container {
+  position: relative;
+  width: 100%;
+  height: 40vh;
+  background-color: $text;
+
+  .inner-footer {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0 auto;
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      width: 15rem;
+    }
+    .socials {
+      display: flex;
+      gap: 1rem;
+
+      .social-link {
+        border-color: $button;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: $secondary;
+          transition: all 0.3s ease;
+
+          i {
+            color: $bg;
+          }
+        }
+      }
+      i {
+        cursor: pointer;
+        color: $button;
+      }
+    }
+    .other-links {
+      display: flex;
+      gap: 1rem;
+
+      a {
+        color: $sub-sub-text;
+
+        &:hover {
+          color: $button;
+          text-decoration: underline;
+          text-underline-offset: 5px;
+          text-decoration-color: $button;
+        }
+      }
+    }
+    .credits {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      padding: 0.5rem;
+      color: $sub-text;
+      font-size: 0.9rem;
+      a {
+        color: $sub-text;
+        &:hover {
+          color: $button;
+          text-decoration: underline;
+          text-underline-offset: 5px;
+          text-decoration-color: $button;
+        }
+      }
+    }
+  }
+}
