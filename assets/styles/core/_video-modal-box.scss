@@ -14,13 +14,6 @@
 
   &::after {
     content: "";
-    position: absolute;
-    display: block;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    background-color: #000000b0;
   }
 
   .inner-modal-box {
@@ -33,7 +26,14 @@
     padding: 1.5rem;
     border-radius: 0.5rem;
     z-index: $z-topest;
-    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+      margin: 0 auto;
+      height: 80%;
+      background-color: #00000050;
+      border: none;
+      align-items: center;
+    }
 
     .main-window {
       position: relative;
@@ -46,6 +46,10 @@
       border-right: 0;
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
+
+      @media screen and (max-width: 768px) {
+        padding: 0;
+      }
     }
     .related-window {
       position: relative;
@@ -53,7 +57,7 @@
       width: 100%;
       height: 100%;
       color: $bg;
-      flex: 0 0 40%;
+      flex: 0 0 20rem;
       padding: 0.5rem;
       overflow-x: hidden;
       overflow-y: scroll;
@@ -61,6 +65,9 @@
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
       scrollbar-width: none;
+      @media screen and (max-width: 768px) {
+        display: none;
+      }
 
       .related-videos {
         display: flex;
@@ -76,6 +83,15 @@
       }
     }
   }
+}
+.overlay-dark {
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #000000b0;
 }
 .modal-in {
   animation: modal-in 0.5s ease forwards;

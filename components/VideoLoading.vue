@@ -42,7 +42,7 @@
 
 @keyframes pulse {
     0% {
-        background-color: #0d273d;
+        background-color: #103a5c;
     }
 
     50% {
@@ -50,7 +50,7 @@
     }
 
     100% {
-        background-color: #0d273d;
+        background-color: #132738;
     }
 }
 </style>

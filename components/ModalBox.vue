@@ -10,13 +10,13 @@
         <slot name="related" />
       </aside>
     </div>
+    <span class="overlay-dark" @click="closeModal"></span>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 
-// Define props and emits
 defineProps<{
   isOpen?: boolean
 }>()
@@ -25,10 +25,8 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-// Local state
 const isModalOpen = ref(true)
 
-// Methods
 const closeModal = () => {
   isModalOpen.value = false
   setTimeout(() => {
@@ -42,7 +40,6 @@ const handleEscKey = (event: KeyboardEvent) => {
   }
 }
 
-// Lifecycle hooks
 onMounted(() => {
   document.body.classList.add('no-scroll')
   window.addEventListener('keydown', handleEscKey)
@@ -55,15 +52,15 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-:global(body.no-scroll) {
+/* :global(body.no-scroll) {
   overflow: hidden;
   height: 100%;
   width: 100%;
   position: fixed;
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
-:global(body.no-scroll::-webkit-scrollbar) {
+} */
+/* :global(body.no-scroll::-webkit-scrollbar) {
   display: none;
-}
+} */
 </style>

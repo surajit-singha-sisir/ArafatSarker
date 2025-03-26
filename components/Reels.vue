@@ -21,7 +21,6 @@
                                 <div class="duration">
                                     <NuxtLink target="_blank" :to="reel.reel_link"><i class="m-facebook4"></i>
                                     </NuxtLink>
-                                    <p>1 min</p>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +72,6 @@ import ModalBox from './ModalBox.vue';
 import VideoPlayer from './VideoPlayer.vue';
 import VideoLoading from './VideoLoading.vue';
 
-// Types
 interface VideoData {
     title?: string
     hd?: string

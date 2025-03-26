@@ -13,7 +13,7 @@
     <div class="controls" v-if="showControls" @mousemove="handleMouseMove" @click.stop>
       <input type="range" min="0" :max="duration" step="0.1" v-model="currentTime" @input="seek" class="progress-bar" />
       <aside class="f f-just-between gap-10 w-100">
-        <div class="f-start-center gap-10">
+        <div class="f-start-center gap-newGap">
           <div @click="togglePlay" class="cur-pointer">
             <i :class="{ 'm-play3': !isPlaying, 'm-pause4': isPlaying }"></i>
           </div>
@@ -30,7 +30,7 @@
           </div>
           <span class="max-w--40 text-nowrap text--08">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span>
         </div>
-        <div class="f-start-center gap-10">
+        <div class="f-start-center gap-10ś gap-newGap2">
           <span class="cur-pointer" @click="togglePictureInPicture">
             <i class="text--09 m-images1"></i>
           </span>
@@ -552,6 +552,19 @@ watch(() => isPlaying.value, (newVal) => {
       }
     }
 
+    .gap-newGap {
+      gap: 1rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .gap-newGap {
+        gap: 0.2rem !important;
+      }
+      .gap-newGap2 {
+        gap: 0.5rem !important;
+      }
+    }
+
     .volume-control {
       display: flex;
       align-items: center;
@@ -573,6 +586,10 @@ watch(() => isPlaying.value, (newVal) => {
           width: 3rem;
           transition: all 0.3s ease;
 
+          @media screen and (max-width: 768px) {
+            width: 2rem;
+          }
+
           .volume-control {
             padding: 0;
             background: transparent;
@@ -583,6 +600,10 @@ watch(() => isPlaying.value, (newVal) => {
             height: 0;
             margin-right: 1rem;
             -webkit-appearance: none;
+
+            @media screen and (max-width: 768px) {
+              width: 2rem;
+            }
 
             &::-webkit-slider-thumb {
               margin-top: -4px;
