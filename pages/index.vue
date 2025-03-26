@@ -1,10 +1,10 @@
 <template>
     <section>
-        <Navbar />
-        <Banner />
-        <Reels />
-        <Videos />
-        <Testimonials />
+        <Navbar id="navbar"/>
+        <Banner id="banner"/>
+        <Reels id="reels"/>
+        <Videos id="portfolio"/>
+        <Testimonials id="testimonial"/>
         <Footer />
     </section>
 </template>
