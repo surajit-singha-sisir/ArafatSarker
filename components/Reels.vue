@@ -10,8 +10,8 @@
                     <RevealAnimation>
                         <div class="reel-container snap-x" :data-direction="randomDirection()" ref="reelContainer">
                             <div class="reel" v-for="(reel, index) in Reels" :key="reel.id">
-                                <div class="title text-dotted-2">
-                                    <p>{{ reel.title }}</p>
+                                <div class="title">
+                                    <p class="text-dotted-2">{{ reel.title }}</p>
                                 </div>
                                 <div class="thumbnail">
                                     <NuxtImg class="img h-full fit-cover" :src="`${URL}${reel.thumbnail}`"

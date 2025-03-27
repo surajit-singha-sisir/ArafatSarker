@@ -11,7 +11,8 @@ html {
     scroll-snap-align: start;
   }
 }
-body {
+body,
+textarea {
   font-family: "Inter", "Baloo Da 2", sans-serif;
   color: $text;
 }

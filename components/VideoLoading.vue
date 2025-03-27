@@ -37,7 +37,7 @@
 }
 
 .video-skeleton {
-    animation: pulse 5s infinite ease-in-out;
+    animation: pulse 3s infinite ease-in-out;
 }
 
 @keyframes pulse {

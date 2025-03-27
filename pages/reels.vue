@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </RevealAnimation>
-                    <span v-if="loading" class="loaderX d-block"></span>
+                    <div class="f-center w-100 pad-tb--10"><span v-if="loading" class="d-block loaderX"></span></div>
                     <div else class="w-100 f-center m-b-30 cur-pointer">
                         <button type="button" class="btn btn-primary m-t-20"
                             @click="fetchNextOffset(item.pagination.next)">

@@ -17,15 +17,15 @@
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="#reels">REELS</NuxtLink>
+                    <NuxtLink class="linked" to="/reels">REELS</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="#portfolio">PORTFOLIO</NuxtLink>
+                    <NuxtLink class="linked" to="/videos">VIDEOS</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="#testimonial">TESTIMONIAL</NuxtLink>
+                    <NuxtLink class="linked" to="/#testimonial">TESTIMONIAL</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>

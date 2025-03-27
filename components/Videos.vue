@@ -1,7 +1,7 @@
 <template>
     <section class="videos-container">
         <div class="inner-videos">
-            <h2 class="text-center">Portfolio</h2>
+            <h2 class="text-center m-b-20">Videos</h2>
             <div class="video-container">
                 <RevealAnimation class="cols-1">
                     <div :data-direction="randomDirection()" v-for="item, index in videos.slice(0, 3)" :key="item.id"
