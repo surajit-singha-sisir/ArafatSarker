@@ -1,0 +1,258 @@
+@use "sass:color";
+@use "/assets/styles/core/variables" as *;
+
+.loaderX {
+  width: 2rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 4px solid $secondary;
+  animation: l20-1 0.8s infinite linear alternate, l20-2 1.6s infinite linear;
+}
+
+@keyframes l20-1 {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+  }
+
+  12.5% {
+    clip-path: polygon(
+      50% 50%,
+      0 0,
+      50% 0%,
+      100% 0%,
+      100% 0%,
+      100% 0%,
+      100% 0%
+    );
+  }
+
+  25% {
+    clip-path: polygon(
+      50% 50%,
+      0 0,
+      50% 0%,
+      100% 0%,
+      100% 100%,
+      100% 100%,
+      100% 100%
+    );
+  }
+
+  50% {
+    clip-path: polygon(
+      50% 50%,
+      0 0,
+      50% 0%,
+      100% 0%,
+      100% 100%,
+      50% 100%,
+      0% 100%
+    );
+  }
+
+  62.5% {
+    clip-path: polygon(
+      50% 50%,
+      100% 0,
+      100% 0%,
+      100% 0%,
+      100% 100%,
+      50% 100%,
+      0% 100%
+    );
+  }
+
+  75% {
+    clip-path: polygon(
+      50% 50%,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      50% 100%,
+      0% 100%
+    );
+  }
+
+  100% {
+    clip-path: polygon(
+      50% 50%,
+      50% 100%,
+      50% 100%,
+      50% 100%,
+      50% 100%,
+      50% 100%,
+      0% 100%
+    );
+  }
+}
+
+@keyframes l20-2 {
+  0% {
+    transform: scaleY(1) rotate(0deg);
+  }
+
+  49.99% {
+    transform: scaleY(1) rotate(135deg);
+  }
+
+  50% {
+    transform: scaleY(-1) rotate(0deg);
+  }
+
+  100% {
+    transform: scaleY(-1) rotate(-135deg);
+  }
+}
+
+.text-bg {
+  color: $bg;
+}
+
+.letter-spaced {
+  font-size: 4rem;
+  letter-spacing: 10px;
+  color: $bg;
+
+  @media screen and (max-width: 768px) {
+    font-size: 3rem;
+    letter-spacing: 6px;
+  }
+
+  @media screen and (max-width: 420px) {
+    font-size: 2.5rem;
+    letter-spacing: 6px;
+  }
+}
+
+.reel-page {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+  z-index: $z-down;
+
+  .inner-reel-page {
+    position: inherit;
+    width: 100%;
+    height: inherit;
+    z-index: $z-topest;
+
+    .showreel {
+      position: inherit;
+      height: calc(100vh - 3.5rem);
+      width: 100%;
+      background-image: url("/images/photo-college.jpg");
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      z-index: $z-topest;
+
+      .overlay {
+        width: 100%;
+        height: 100%;
+        background-color: #070727da;
+        z-index: $z-topest;
+      }
+    }
+
+    .category-bar {
+      position: sticky;
+      top: 4rem;
+      width: 100%;
+      height: auto;
+      margin-bottom: 2rem;
+      z-index: $z-topest;
+
+      .inner-category-bar {
+        width: 100%;
+        padding: 1rem;
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        background-color: #e0e0e0e7;
+        z-index: $z-down;
+
+        @media screen and (max-width: 768px) {
+          font-size: 0.6rem;
+          padding: 0.5rem;
+          gap: 0.3rem;
+        }
+
+        .cat-pointer {
+          position: relative;
+          height: 100%;
+          display: flex;
+          gap: 0.5rem;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid color.adjust($warning, $lightness: 10%);
+          background-color: color.adjust($warning, $lightness: 8%);
+          color: color.adjust($warning, $lightness: 50%);
+          padding: 0.5rem;
+          border-radius: 0.5rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-shadow: 0 1px 2px #00000050;
+
+          i {
+            font-size: 0.7rem;
+            color: color.adjust($warning, $lightness: 50%);
+
+            @media screen and (max-width: 768px) {
+              font-size: 0.6rem;
+            }
+          }
+
+          &:hover {
+            background-color: color.adjust($warning, $lightness: 0%);
+            transition: all 0.3s ease;
+          }
+        }
+      }
+    }
+
+    .content-container {
+      position: relative;
+      width: 80%;
+      margin: 0 auto;
+
+      .inner-content-container {
+        position: relative;
+
+        h2 {
+          text-align: center;
+          border-bottom: 1px solid $border;
+          margin-bottom: 2rem;
+          padding-bottom: 1rem;
+        }
+      }
+    }
+  }
+}
+.grid-res-5 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
+  @media screen and (max-width: 1368px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @media screen and (max-width: 1280px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media screen and (max-width: 1080px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 720px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 280px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.h-100i {
+  height: 100% !important;
+}

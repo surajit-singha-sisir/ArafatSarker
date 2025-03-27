@@ -2,9 +2,8 @@
 @use "variables" as *;
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-// color: color.adjust($primary, $lightness: -60%);
 html {
-  overflow-y: scroll;
+  // overflow-y: scroll;
   // scroll-snap-type: y mandatory;
 
   section,

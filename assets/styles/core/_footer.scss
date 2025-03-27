@@ -13,6 +13,7 @@ footer.footer-container {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    flex-wrap: wrap;
     gap: 1rem;
     margin: 0 auto;
 
@@ -22,10 +23,19 @@ footer.footer-container {
       width: 15rem;
     }
     .socials {
+      position: relative;
       display: flex;
-      gap: 1rem;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+
+      @media screen and (max-width: 768px) {
+        gap: 0.3rem;
+      }
 
       .social-link {
+        min-width: 1.7rem !important;
+        max-width: 0;
+        aspect-ratio: 1;
         border-color: $button;
         transition: all 0.3s ease;
 
@@ -40,11 +50,14 @@ footer.footer-container {
       }
       i {
         cursor: pointer;
+        font-size: 0.9rem;
         color: $button;
       }
     }
+
     .other-links {
       display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
 
       a {
@@ -58,21 +71,25 @@ footer.footer-container {
         }
       }
     }
-    .credits {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      padding: 0.5rem;
+  }
+  .credits {
+    position: relative;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    gap: 0.3rem;
+    padding: 0.5rem;
+    color: $sub-text;
+    font-size: 0.9rem;
+    border-top: 1px solid color.adjust($text, $lightness: 15%);
+    background-color: color.adjust($text, $lightness: -3%);
+    a {
       color: $sub-text;
-      font-size: 0.9rem;
-      a {
-        color: $sub-text;
-        &:hover {
-          color: $button;
-          text-decoration: underline;
-          text-underline-offset: 5px;
-          text-decoration-color: $button;
-        }
+      &:hover {
+        color: $button;
+        text-decoration: underline;
+        text-underline-offset: 5px;
+        text-decoration-color: $button;
       }
     }
   }

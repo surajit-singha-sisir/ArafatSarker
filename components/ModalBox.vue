@@ -1,4 +1,3 @@
-<!-- VideoModal.vue -->
 <template>
   <div class="video-modal-box" :class="{ 'modal-out': !isModalOpen, 'modal-in': isModalOpen }">
     <div class="inner-modal-box">
@@ -29,6 +28,7 @@ const isModalOpen = ref(true)
 
 const closeModal = () => {
   isModalOpen.value = false
+  document.body.style.overflow = ''; // Restore scroll
   setTimeout(() => {
     emit('close')
   }, 500)
@@ -41,26 +41,12 @@ const handleEscKey = (event: KeyboardEvent) => {
 }
 
 onMounted(() => {
-  document.body.classList.add('no-scroll')
   window.addEventListener('keydown', handleEscKey)
+  document.body.style.overflow = 'hidden';
 })
 
 onUnmounted(() => {
-  document.body.classList.remove('no-scroll')
   window.removeEventListener('keydown', handleEscKey)
+  document.body.style.overflow = '';
 })
 </script>
-
-<style scoped>
-/* :global(body.no-scroll) {
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-} */
-/* :global(body.no-scroll::-webkit-scrollbar) {
-  display: none;
-} */
-</style>

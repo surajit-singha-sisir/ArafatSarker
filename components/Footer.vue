@@ -18,7 +18,8 @@
                 <NuxtLink to="/">Newsletter</NuxtLink>
                 <NuxtLink to="/">FAQ</NuxtLink>
             </div>
-            <div class="credits">Design & Developed by <NuxtLink to="/">KEHEM IT</NuxtLink></div>
+        </div>
+        <div class="credits">Design & Developed by <NuxtLink to="https://kehem.com/">KEHEM IT</NuxtLink>
         </div>
     </footer>
 </template>

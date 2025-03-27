@@ -7,9 +7,9 @@
                 <span></span>
             </div>
             <!-- LOGO -->
-            <div class="logo w--80">
+            <NuxtLink to="/" class="logo w--80">
                 <NuxtImg class="w-100" src="images/logo.svg" />
-            </div>
+            </NuxtLink>
             <ul class="nav-links f-centered gap-10" :class="{ active: isHamburger }">
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>

@@ -443,6 +443,7 @@ watch(() => isPlaying.value, (newVal) => {
   position: relative;
   width: 100%;
   height: 100%;
+  z-index: 9999;
 
   &.fullscreen-mobile {
     @media screen and (max-width: 768px) {

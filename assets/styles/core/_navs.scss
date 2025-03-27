@@ -7,8 +7,9 @@ nav.nav {
   position: sticky;
   top: 0;
   width: 100%;
-  background-color: color.adjust($sub-sub-text, $lightness: 30%);
-  z-index: $z-top;
+  background-color: #f8f8f8da;
+  backdrop-filter: blur(10px);
+  z-index: $z-toper;
 }
 .inner-nav {
   position: relative;
