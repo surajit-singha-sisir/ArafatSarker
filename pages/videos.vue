@@ -182,7 +182,7 @@ const fetchVideoData = async () => {
     const MIN_LOADING_TIME = 2000;
 
     try {
-        const response = await fetch(`/api/video?url=${encodeURIComponent(urlToFetch)}`);
+        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`);
         const result = await response.json();
 
         const elapsedTime = Date.now() - startTime;

@@ -55,7 +55,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-const BASE_URL = 'http://192.168.0.111:3000';
+const BASE_URL = 'https://arafatsarkar.com';
 
 interface Banners {
     id: number;

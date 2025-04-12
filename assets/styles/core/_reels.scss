@@ -74,25 +74,26 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: auto;
   height: auto;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
 
-  @media screen and (min-width: 1800px) {
-    width: 78rem;
-  }
-  @media screen and (max-width: 1720px) {
-    width: 66rem;
-  }
-  @media screen and (max-width: 1320px) {
-    width: 55rem;
-  }
-  @media screen and (max-width: 1080px) {
-    width: 44rem;
-  }
-  @media screen and (max-width: 768px) {
-    width: 33rem;
-  }
+  // @media screen and (min-width: 1800px) {
+  //   width: 78rem;
+  // }
+  // @media screen and (max-width: 1720px) {
+  //   width: 66rem;
+  // }
+  // @media screen and (max-width: 1320px) {
+  //   width: 55rem;
+  // }
+  // @media screen and (max-width: 1080px) {
+  //   width: 44rem;
+  // }
+  // @media screen and (max-width: 768px) {
+  //   width: 33rem;
+  // }
 }
 .reel {
   position: relative;
@@ -103,6 +104,35 @@
   aspect-ratio: 2/4;
   background-color: $slider;
   flex: 0 0 auto;
+  overflow: hidden;
+
+  .category {
+    top: -100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    color: #fff;
+    position: absolute;
+    transition: all 0.5s ease;
+
+    .text-dotted-2 {
+      font-size: 1.5rem;
+    }
+
+    .btn {
+      width: 5rem !important;
+    }
+  }
+
+  &:hover .category {
+    top: 0;
+    background-color: #000000b0;
+    transition: all 0.5s ease;
+  }
 
   @media screen and (min-width: 1800px) {
     width: 12rem;

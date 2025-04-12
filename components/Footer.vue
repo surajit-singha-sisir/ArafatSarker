@@ -39,7 +39,7 @@ interface Socials {
     email: string
 }
 
-const { data, error } = await useFetch<Socials>('http://192.168.0.111:3000/api/api_social');
+const { data, error } = await useFetch<Socials>('https://arafatsarkar.com/api/api_social');
 
 
 </script>

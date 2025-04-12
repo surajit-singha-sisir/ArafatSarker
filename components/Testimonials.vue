@@ -20,7 +20,7 @@
             <transition :name="direction">
                 <div v-if="testimonials" class="testimonialX" :key="currentIndex">
                     <aside class="img-round">
-                        <NuxtImg :src="`http://192.168.0.111:3000${testimonials[currentIndex]?.profile_pic}`" />
+                        <NuxtImg :src="`https://arafatsarkar.com${testimonials[currentIndex]?.profile_pic}`" />
                     </aside>
                     <aside class="details">
                         <span class="quote-left i-position"><i class="m-left-quote"></i></span>
@@ -59,7 +59,7 @@ const isNext = ref(true)
 const autoPlayInterval = ref<NodeJS.Timeout | null>(null)
 const direction = ref('right')
 
-const { data: testimonials, error } = await useFetch<Testimonial[]>('http://192.168.0.111:3000/api/api_testimonial', {
+const { data: testimonials, error } = await useFetch<Testimonial[]>('https://arafatsarkar.com/api/api_testimonial', {
     default: () => []
 })
 

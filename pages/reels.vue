@@ -133,7 +133,7 @@ interface VideoData {
 }
 
 // State
-const URL = ref('http://192.168.0.111:3000');
+const URL = ref('https://arafatsarkar.com');
 const reelContainer = ref<HTMLElement | null>(null);
 const loading = ref(false);
 const error = ref<Error | null>(null);
@@ -180,9 +180,9 @@ const fetchVideoData = async () => {
     error.value = null;
     const startTime = Date.now();
     const MIN_LOADING_TIME = 2000;
-
+    // https://arafatsarkar.com/api/video-info?link=https%3A%2F%2Fwww.facebook.com%2Freel%2F382898828072615
     try {
-        const response = await fetch(`/api/video?url=${encodeURIComponent(urlToFetch)}`);
+        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`);
         const result = await response.json();
 
         const elapsedTime = Date.now() - startTime;
