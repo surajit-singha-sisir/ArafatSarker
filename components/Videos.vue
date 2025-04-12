@@ -44,7 +44,7 @@
             </div> -->
 
             <div class="front-video-container">
-                <div class="row" v-for="item, ind in Videos" key="ind">
+                <div class="row" v-for="(item, ind) in Videos" :key="ind">
                     <div class="video">
                         <div class="category">
                             <p class="text-dotted-2 text-center">{{ item.name }} Videos</p>
@@ -53,12 +53,8 @@
                             </NuxtLink>
                         </div>
                         <RevealAnimation class="thumbs-loop">
-                            <NuxtImg class="custom-image-prev" src="https://arafatsarkar.com/media/arafat/thumb-24.webp"
-                                alt="video.name" loading="lazy" />
-                            <NuxtImg class="custom-image-prev" src="https://arafatsarkar.com/media/arafat/thumb-24.webp"
-                                alt="video.name" loading="lazy" />
-                            <NuxtImg class="custom-image-prev" src="https://arafatsarkar.com/media/arafat/thumb-24.webp"
-                                alt="video.name" loading="lazy" />
+                            <NuxtImg class="custom-image-prev" v-for="(image, index) in item.thumbnail" :key="index"
+                                :src="`${URL}${image}`" :alt="item.name" loading="lazy" />
                         </RevealAnimation>
                     </div>
                 </div>
