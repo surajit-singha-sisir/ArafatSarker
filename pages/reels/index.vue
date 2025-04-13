@@ -3,14 +3,26 @@
         <div class="inner-reel-page">
             <div class="showreel">
                 <div class="abs-center f-center f-col gap-20">
-                    <h1 class="letter-spaced">{{ key }}</h1>
+                    <h1 class="letter-spaced">SHOWREEL</h1>
+                    <NuxtLink to="#main" class="btn btn-primary btn-lg">Watch Portfolio</NuxtLink>
                 </div>
                 <div class="overlay"></div>
             </div>
-            <br><br>
+
+            <!-- CATEGORIES -->
+            <div class="category-bar">
+                <div class="inner-category-bar">
+                    <NuxtLink :to="`#${item.category_name}`" class="cat-pointer" v-for="(item, i) in reelsData"
+                        :key="i">
+                        <i class="m-stop2"></i>
+                        <p>{{ item.category_name }}</p>
+                    </NuxtLink>
+                </div>
+            </div>
 
             <div class="content-container">
                 <div :id="item.category_name" class="inner-content-container" v-for="(item, i) in reelsData" :key="i">
+                    <h2>{{ item.category_name }}</h2>
                     <RevealAnimation>
                         <div class="grid-res-5 gap-10" :data-direction="randomDirection()" ref="reelContainer">
                             <div class="reel" v-for="(reel, index) in item.reels" :key="reel.id">
@@ -83,8 +95,6 @@
 </template>
 
 <script setup lang="ts">
-const router = useRoute();
-const key = router.params.key as string;
 interface Reel {
     id: number;
     created_at: string;
@@ -137,7 +147,7 @@ const isMuted = ref(true);
 
 // Fetch dynamic data
 const { data: reelsData, status } = await useFetch<ApiResponse>(
-    `${URL.value}/api/api_video_page?category=${key}&page=1&type=reel`,
+    `${URL.value}/api/api_video?type=reel`,
     {
         method: 'GET',
     }

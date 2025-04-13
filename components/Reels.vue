@@ -12,7 +12,7 @@
                             <div class="reel" v-for="(reel, index) in Reels" :key="index">
                                 <div class="category">
                                     <p class="text-dotted-2 text-center">{{ reel.name }} Videos</p>
-                                    <NuxtLink :to="`/reels/${reel.name.trim().replaceAll(' ', '-')}}`" class="btn btn-primary btn-sm">View all
+                                    <NuxtLink :to="`/reels/${reel.name.trim()}`" class="btn btn-primary btn-sm">View all
                                     </NuxtLink>
                                 </div>
                                 <NuxtImg class="img h-full object-cover"
