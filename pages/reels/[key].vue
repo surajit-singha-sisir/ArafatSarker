@@ -18,7 +18,7 @@
                                     <p class="text-dotted-2">{{ reel.title }}</p>
                                 </div>
                                 <div class="thumbnail">
-                                    <NuxtImg class="img  fit-cover" :src="`${URL}${reel.thumbnail}`" :alt="reel.title"
+                                    <NuxtImg class="img fit-cover" :src="`${URL}${reel.thumbnail}`" :alt="reel.title"
                                         @click="playReel(index, reel.reel_link)" />
                                 </div>
                                 <div class="play-icon" title="Play" @click="playReel(index, reel.reel_link)">
@@ -32,10 +32,11 @@
                             </div>
                         </div>
                     </RevealAnimation>
-                    <div class="f-center w-100 pad-tb--10"><span v-if="loading" class="d-block loaderX"></span></div>
-                    <div else class="w-100 f-center m-b-30 cur-pointer">
-                        <button type="button" class="btn btn-primary m-t-20"
-                            @click="fetchNextOffset(item.pagination.next)">
+                    <div class="f-center w-100 pad-tb--10">
+                        <span v-if="loading" class="d-block loaderX"></span>
+                    </div>
+                    <div v-if="item.pagination.has_next" class="w-100 f-center m-b-30 cur-pointer">
+                        <button type="button" class="btn btn-primary m-t-20" :disabled="loading" @click="fetchNextOffset(item)">
                             <p>Load More</p>
                         </button>
                     </div>
@@ -85,6 +86,7 @@
 <script setup lang="ts">
 const router = useRoute();
 const key = router.params.key as string;
+
 interface Reel {
     id: number;
     created_at: string;
@@ -104,6 +106,8 @@ interface Pagination {
     next: string | null;
     previous: string | null;
     page_size: number;
+    has_next: boolean;
+    has_previous: boolean;
 }
 
 interface Category {
@@ -172,9 +176,9 @@ const fetchVideoData = async () => {
     const MIN_LOADING_TIME = 2000;
 
     try {
-        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`)
-        const result = await response.json()
-        videoData.value = result
+        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`);
+        const result = await response.json();
+        videoData.value = result;
 
         const elapsedTime = Date.now() - startTime;
         const remainingTime = MIN_LOADING_TIME - elapsedTime;
@@ -236,16 +240,18 @@ const closeModal = () => {
     currentReelLink.value = '';
 };
 
-
-const fetchNextOffset = async (nextUrl: string | null) => {
-    if (!nextUrl || loading.value) return;
+const fetchNextOffset = async (categoryItem: Category) => {
+    if (!categoryItem.pagination.has_next || loading.value) return;
 
     loading.value = true;
     error.value = null;
 
     try {
+        const nextPage = categoryItem.pagination.current_page + 1;
+        const nextUrl = `${URL.value}/api/api_video_page?category=${key}&page=${nextPage}&type=reel`;
+
         const response = await fetch(nextUrl, {
-            method: 'GET'
+            method: 'GET',
         });
 
         if (!response.ok) {
@@ -258,12 +264,11 @@ const fetchNextOffset = async (nextUrl: string | null) => {
             if (reelsData.value?.[categoryId]) {
                 reelsData.value[categoryId].reels = [
                     ...reelsData.value[categoryId].reels,
-                    ...categoryData.reels
+                    ...categoryData.reels,
                 ];
                 reelsData.value[categoryId].pagination = categoryData.pagination;
             }
         });
-
     } catch (err) {
         error.value = err instanceof Error ? err : new Error('Failed to fetch next page');
         console.error('Error fetching next offset:', err);
@@ -271,7 +276,6 @@ const fetchNextOffset = async (nextUrl: string | null) => {
         loading.value = false;
     }
 };
-
 </script>
 
 <style scoped lang="scss">
@@ -293,7 +297,6 @@ const fetchNextOffset = async (nextUrl: string | null) => {
 }
 
 @media screen and (min-width: 521px) and (max-width: 720px) {
-
     .g-res-container,
     .grid-res-container {
         grid-template-columns: repeat(1fr 1fr) !important;

@@ -26,16 +26,18 @@
                     <div class="profile-card">
                         <div class="w-100 f gap-10 f-col m-t-40">
                             <table>
-                                <tr>
-                                    <td>E-mail</td>
-                                    <td>:</td>
-                                    <td>arafat@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td>Phone</td>
-                                    <td>:</td>
-                                    <td>+88018548548</td>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td>E-mail</td>
+                                        <td>:</td>
+                                        <td>arafat@gmail.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td>:</td>
+                                        <td>+88018548548</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>

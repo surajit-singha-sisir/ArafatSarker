@@ -23,24 +23,21 @@
             <div class="content-container">
                 <div :id="item.category_name" class="inner-content-container" v-for="(item, i) in reelsData" :key="i">
                     <h2>{{ item.category_name }}</h2>
-                    <RevealAnimation>
-                        <div class="grid-res-5 gap-10" :data-direction="randomDirection()" ref="reelContainer">
-                            <div class="reel" v-for="(reel, index) in item.videos" :key="reel.id">
-                                <div class="title">
-                                    <p class="text-dotted-2">{{ reel.title }}</p>
-                                </div>
-                                <div class="thumbnail">
-                                    <NuxtImg class="img w-100i fit-cover" :src="`${URL}${reel.thumbnail}`"
-                                        :alt="reel.title" @click="playReel(index, reel.reel_link)" />
-                                </div>
-                                <div class="play-icon" title="Play" @click="playReel(index, reel.reel_link)">
-                                    <i class="m-play2"></i>
-                                </div>
-                                <div class="duration">
-                                    <NuxtLink target="_blank" :to="reel.reel_link">
-                                        <i class="m-facebook4"></i>
-                                    </NuxtLink>
-                                </div>
+                    <RevealAnimation class="g-res-3-col-container gap-05">
+                        <div class="video-container-view" :data-direction="randomDirection()" ref="reelContainer"
+                            v-for="(reel, index) in item.videos" :key="reel.id" :class="`box`">
+                            <NuxtImg class="video-thumb video-thumb-height" :src="`${URL}${reel.thumbnail}`"
+                                :alt="reel.title" @click="playReel(index, reel.reel_link)" />
+                            <span class="video-title">
+                                <p class="text-dotted-2">{{ reel.title }}</p>
+                            </span>
+                            <div class="play-icon" title="Play" @click="playReel(index, reel.reel_link)">
+                                <i class="m-play2"></i>
+                            </div>
+                            <div class="facebook-link">
+                                <NuxtLink target="_blank" :to="reel.reel_link">
+                                    <i class="m-facebook4"></i>
+                                </NuxtLink>
                             </div>
                         </div>
                     </RevealAnimation>
@@ -94,6 +91,12 @@
     </section>
 </template>
 
+<style scoped lang="scss">
+.box:hover .video-title {
+    top: 0 !important;
+}
+</style>
+
 <script setup lang="ts">
 interface Video {
     id: number;
@@ -133,7 +136,7 @@ interface VideoData {
 }
 
 // State
-const URL = ref('http://192.168.0.111:3000');
+const URL = ref('https://arafatsarkar.com');
 const reelContainer = ref<HTMLElement | null>(null);
 const loading = ref(false);
 const error = ref<Error | null>(null);
@@ -168,50 +171,56 @@ const randomDirection = () => {
 };
 
 const fetchVideoData = async () => {
-    const urlToFetch = currentReelLink.value;
+    const urlToFetch = currentReelLink.value
     if (!urlToFetch) {
-        error.value = new Error('Please provide a video URL');
-        videoError.value = true;
-        return;
+        // error.value = 'Please provide a video URL'
+        videoError.value = true
+        return
     }
 
-    loading.value = true;
-    videoError.value = false;
-    error.value = null;
-    const startTime = Date.now();
-    const MIN_LOADING_TIME = 2000;
+    loading.value = true
+    videoError.value = false
+    error.value = null
+    const startTime = Date.now()
+    const MIN_LOADING_TIME = 2000
 
     try {
-        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`);
-        const result = await response.json();
+        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`)
+        const result = await response.json()
+        videoData.value = result
 
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = MIN_LOADING_TIME - elapsedTime;
+
+        const elapsedTime = Date.now() - startTime
+        const remainingTime = MIN_LOADING_TIME - elapsedTime
         if (remainingTime > 0) {
-            await new Promise(resolve => setTimeout(resolve, remainingTime));
+            await new Promise(resolve => setTimeout(resolve, remainingTime))
         }
+        videoData.value = result
 
         if (result.status === 'success') {
-            videoData.value = result.data;
-            isVideoData.value = false;
+            isVideoData.value = false
         } else {
-            error.value = new Error(result.message || 'Failed to load reel');
-            isVideoData.value = true;
+            error.value = result.message || 'Failed to load reel'
+            isVideoData.value = true
         }
     } catch (err) {
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = MIN_LOADING_TIME - elapsedTime;
+        const elapsedTime = Date.now() - startTime
+        const remainingTime = MIN_LOADING_TIME - elapsedTime
         if (remainingTime > 0) {
-            await new Promise(resolve => setTimeout(resolve, remainingTime));
+            await new Promise(resolve => setTimeout(resolve, remainingTime))
         }
-        error.value = err instanceof Error ? err : new Error(String(err));
-        videoError.value = true;
-        isVideoData.value = true;
+        videoError.value = true
+        isVideoData.value = true
     } finally {
-        loading.value = false;
+        loading.value = false
     }
-};
+}
 
+const playVideo = (index: number, link: string) => {
+    currentReelLink.value = link;
+    showModal.value = true;
+    fetchVideoData();
+};
 const playReel = (index: number, link: string) => {
     currentReelLink.value = link;
     showModal.value = true;
@@ -289,8 +298,16 @@ const fetchNextOffset = async (nextUrl: string | null) => {
     aspect-ratio: 3/4 !important;
 }
 
-.trid-res-5 {
-    
+.box .facebook-link {
+    aspect-ratio: 1;
+    bottom: 1rem;
+    display: block;
+    position: absolute;
+    right: 1rem;
+
+    i {
+        font-size: 1rem;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -307,4 +324,3 @@ const fetchNextOffset = async (nextUrl: string | null) => {
     }
 }
 </style>
-<style lang="scss"></style>

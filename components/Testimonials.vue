@@ -5,12 +5,12 @@
         <div class="title">
             <h2>TESTIMONIAL</h2>
             <div class="arrows">
-                <button @click="previous" class="btn btn-rounded"
-                    :class="{ 'btn-primary': isPrevious, 'btn-secondary': !isPrevious }">
+                <button type="button" @click="previous" class="btn btn-rounded"
+                    :class="{ 'btn-primary': isPrevious, 'btn-secondary': !isPrevious }" title="Previous Testimonial">
                     <i class="m-chevron-left"></i>
                 </button>
-                <button @click="next" class="btn btn-rounded"
-                    :class="{ 'btn-primary': isNext, 'btn-secondary': !isNext }">
+                <button type="button" @click="next" class="btn btn-rounded"
+                    :class="{ 'btn-primary': isNext, 'btn-secondary': !isNext }" title="Next Testimonial">
                     <i class="m-chevron-right"></i>
                 </button>
             </div>
@@ -20,7 +20,7 @@
             <transition :name="direction">
                 <div v-if="testimonials" class="testimonialX" :key="currentIndex">
                     <aside class="img-round">
-                        <NuxtImg :src="`https://arafatsarkar.com${testimonials[currentIndex]?.profile_pic}`" />
+                        <NuxtImg :src="`https://arafatsarkar.com//${testimonials[currentIndex]?.profile_pic}`" alt="testimonial person image"/>
                     </aside>
                     <aside class="details">
                         <span class="quote-left i-position"><i class="m-left-quote"></i></span>

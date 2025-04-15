@@ -9,7 +9,6 @@
     height: 100%;
     background: #071827;
     position: relative;
-    overflow: hidden;
 }
 
 .video-skeleton::before {

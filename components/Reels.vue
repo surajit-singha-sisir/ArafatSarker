@@ -16,7 +16,7 @@
                                     </NuxtLink>
                                 </div>
                                 <NuxtImg class="img h-full object-cover"
-                                    :src="`${URL}${reel.thumbnail[0] || '/placeholder.jpg'}`" :alt="reel.name"
+                                    :src="`${URL}/${reel.thumbnail[0]}`" :alt="reel.name"
                                     loading="lazy" />
                             </div>
                         </div>

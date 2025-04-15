@@ -10,6 +10,9 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      htmlAttrs: {
+        lang: 'en'
+      },
       link: [
         {
           rel: 'stylesheet',
@@ -28,6 +31,6 @@ export default defineNuxtConfig({
     port: 3000
   },
 
-  modules: ['@nuxt/image'],
+  modules: ['@nuxt/image', '@nuxtjs/seo'],
   // plugins: ['kehem-tooltip'],
 })

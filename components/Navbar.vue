@@ -8,7 +8,7 @@
             </div>
             <!-- LOGO -->
             <NuxtLink to="/" class="logo w--80">
-                <NuxtImg class="w-100" src="images/logo.svg" />
+                <NuxtImg class="w-100" src="images/logo.svg" alt="Arafat Sarkar Portfolio Logo" />
             </NuxtLink>
             <ul class="nav-links f-centered gap-10" :class="{ active: isHamburger }">
                 <li class="nav-link">

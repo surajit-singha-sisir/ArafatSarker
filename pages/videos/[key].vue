@@ -3,51 +3,39 @@
         <div class="inner-reel-page">
             <div class="showreel">
                 <div class="abs-center f-center f-col gap-20">
-                    <h1 class="letter-spaced">SHOWREEL</h1>
-                    <NuxtLink to="#main" class="btn btn-primary btn-lg">Watch Portfolio</NuxtLink>
+                    <h1 class="letter-spaced">{{ key }}</h1>
                 </div>
                 <div class="overlay"></div>
             </div>
-
-            <!-- CATEGORIES -->
-            <div class="category-bar">
-                <div class="inner-category-bar">
-                    <NuxtLink :to="`#${item.category_name}`" class="cat-pointer" v-for="(item, i) in reelsData"
-                        :key="i">
-                        <i class="m-stop2"></i>
-                        <p>{{ item.category_name }}</p>
-                    </NuxtLink>
-                </div>
-            </div>
+            <br><br>
 
             <div class="content-container">
                 <div :id="item.category_name" class="inner-content-container" v-for="(item, i) in reelsData" :key="i">
                     <h2>{{ item.category_name }}</h2>
-                    <RevealAnimation>
-                        <div class="grid-res-5 gap-10" :data-direction="randomDirection()" ref="reelContainer">
-                            <div class="reel" v-for="(reel, index) in item.reels" :key="reel.id">
-                                <div class="title">
-                                    <p class="text-dotted-2">{{ reel.title }}</p>
-                                </div>
-                                <div class="thumbnail">
-                                    <NuxtImg class="img h-100i fit-cover" :src="`${URL}${reel.thumbnail}`"
-                                        :alt="reel.title" @click="playReel(index, reel.reel_link)" />
-                                </div>
-                                <div class="play-icon" title="Play" @click="playReel(index, reel.reel_link)">
-                                    <i class="m-play2"></i>
-                                </div>
-                                <div class="duration">
-                                    <NuxtLink target="_blank" :to="reel.reel_link">
-                                        <i class="m-facebook4"></i>
-                                    </NuxtLink>
-                                </div>
+                    <RevealAnimation class="g-res-3-col-container gap-05">
+                        <div class="video-container-view" :data-direction="randomDirection()" ref="reelContainer"
+                            v-for="(reel, index) in item.videos" :key="reel.id" :class="`box`">
+                            <NuxtImg class="video-thumb video-thumb-height" :src="`${URL}${reel.thumbnail}`"
+                                :alt="reel.title" @click="playReel(index, reel.reel_link)" />
+                            <span class="video-title">
+                                <p class="text-dotted-2">{{ reel.title }}</p>
+                            </span>
+                            <div class="play-icon" title="Play" @click="playReel(index, reel.reel_link)">
+                                <i class="m-play2"></i>
+                            </div>
+                            <div class="facebook-link">
+                                <NuxtLink target="_blank" :to="reel.reel_link">
+                                    <i class="m-facebook4"></i>
+                                </NuxtLink>
                             </div>
                         </div>
                     </RevealAnimation>
-                    <div class="f-center w-100 pad-tb--10"><span v-if="loading" class="d-block loaderX"></span></div>
-                    <div else class="w-100 f-center m-b-30 cur-pointer">
-                        <button type="button" class="btn btn-primary m-t-20"
-                            @click="fetchNextOffset(item.pagination.next)">
+                    <div class="f-center w-100 pad-tb--10">
+                        <span v-if="loading" class="d-block loaderX"></span>
+                    </div>
+                    <div v-if="item.pagination.has_next" class="w-100 f-center m-b-30 cur-pointer">
+                        <button type="button" class="btn btn-primary m-t-20" :disabled="loading"
+                            @click="fetchNextOffset(item)">
                             <p>Load More</p>
                         </button>
                     </div>
@@ -94,8 +82,11 @@
     </section>
 </template>
 
+
 <script setup lang="ts">
-interface Reel {
+import { routerKey, RouterLink } from 'vue-router';
+const key = useRoute().params.key;
+interface Video {
     id: number;
     created_at: string;
     type: string;
@@ -114,11 +105,13 @@ interface Pagination {
     next: string | null;
     previous: string | null;
     page_size: number;
+    has_next: boolean;
+    has_previous: boolean;
 }
 
 interface Category {
     category_name: string;
-    reels: Reel[];
+    videos: Video[];
     pagination: Pagination;
 }
 
@@ -147,7 +140,7 @@ const isMuted = ref(true);
 
 // Fetch dynamic data
 const { data: reelsData, status } = await useFetch<ApiResponse>(
-    `${URL.value}/api/api_video?type=reel`,
+    `${URL.value}/api/api_video_page?category=${key}&page=1&type=video`,
     {
         method: 'GET',
     }
@@ -155,7 +148,7 @@ const { data: reelsData, status } = await useFetch<ApiResponse>(
 
 const allReels = computed(() => {
     if (!reelsData.value) return [];
-    return Object.values(reelsData.value).flatMap(category => category.reels);
+    return Object.values(reelsData.value).flatMap(category => category.videos);
 });
 
 const currentQuality = computed(() => {
@@ -168,50 +161,55 @@ const randomDirection = () => {
 };
 
 const fetchVideoData = async () => {
-    const urlToFetch = currentReelLink.value;
+    const urlToFetch = currentReelLink.value
     if (!urlToFetch) {
-        error.value = new Error('Please provide a video URL');
-        videoError.value = true;
-        return;
+        videoError.value = true
+        return
     }
 
-    loading.value = true;
-    videoError.value = false;
-    error.value = null;
-    const startTime = Date.now();
-    const MIN_LOADING_TIME = 2000;
-    // https://arafatsarkar.com/api/video-info?link=https%3A%2F%2Fwww.facebook.com%2Freel%2F382898828072615
-    try {
-        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`);
-        const result = await response.json();
+    loading.value = true
+    videoError.value = false
+    error.value = null
+    const startTime = Date.now()
+    const MIN_LOADING_TIME = 2000
 
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = MIN_LOADING_TIME - elapsedTime;
+    try {
+        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`)
+        const result = await response.json()
+        videoData.value = result
+
+
+        const elapsedTime = Date.now() - startTime
+        const remainingTime = MIN_LOADING_TIME - elapsedTime
         if (remainingTime > 0) {
-            await new Promise(resolve => setTimeout(resolve, remainingTime));
+            await new Promise(resolve => setTimeout(resolve, remainingTime))
         }
+        videoData.value = result
 
         if (result.status === 'success') {
-            videoData.value = result.data;
-            isVideoData.value = false;
+            isVideoData.value = false
         } else {
-            error.value = new Error(result.message || 'Failed to load reel');
-            isVideoData.value = true;
+            error.value = result.message || 'Failed to load reel'
+            isVideoData.value = true
         }
     } catch (err) {
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = MIN_LOADING_TIME - elapsedTime;
+        const elapsedTime = Date.now() - startTime
+        const remainingTime = MIN_LOADING_TIME - elapsedTime
         if (remainingTime > 0) {
-            await new Promise(resolve => setTimeout(resolve, remainingTime));
+            await new Promise(resolve => setTimeout(resolve, remainingTime))
         }
-        error.value = err instanceof Error ? err : new Error(String(err));
-        videoError.value = true;
-        isVideoData.value = true;
+        videoError.value = true
+        isVideoData.value = true
     } finally {
-        loading.value = false;
+        loading.value = false
     }
-};
+}
 
+const playVideo = (index: number, link: string) => {
+    currentReelLink.value = link;
+    showModal.value = true;
+    fetchVideoData();
+};
 const playReel = (index: number, link: string) => {
     currentReelLink.value = link;
     showModal.value = true;
@@ -246,15 +244,19 @@ const closeModal = () => {
 };
 
 
-const fetchNextOffset = async (nextUrl: string | null) => {
-    if (!nextUrl || loading.value) return;
+const fetchNextOffset = async (categoryItem: Category) => {
+    if (!categoryItem.pagination.has_next || loading.value) return;
 
     loading.value = true;
     error.value = null;
 
     try {
+        // Construct the next page URL by incrementing the current page
+        const nextPage = categoryItem.pagination.current_page + 1;
+        const nextUrl = `${URL.value}/api/api_video_page?category=${key}&page=${nextPage}&type=video`;
+
         const response = await fetch(nextUrl, {
-            method: 'GET'
+            method: 'GET',
         });
 
         if (!response.ok) {
@@ -265,14 +267,13 @@ const fetchNextOffset = async (nextUrl: string | null) => {
 
         Object.entries(result).forEach(([categoryId, categoryData]) => {
             if (reelsData.value?.[categoryId]) {
-                reelsData.value[categoryId].reels = [
-                    ...reelsData.value[categoryId].reels,
-                    ...categoryData.reels
+                reelsData.value[categoryId].videos = [
+                    ...reelsData.value[categoryId].videos,
+                    ...categoryData.videos,
                 ];
                 reelsData.value[categoryId].pagination = categoryData.pagination;
             }
         });
-
     } catch (err) {
         error.value = err instanceof Error ? err : new Error('Failed to fetch next page');
         console.error('Error fetching next offset:', err);
@@ -286,7 +287,19 @@ const fetchNextOffset = async (nextUrl: string | null) => {
 <style scoped>
 .reel {
     width: 100% !important;
-    aspect-ratio: 1/2 !important;
+    aspect-ratio: 3/4 !important;
+}
+
+.box .facebook-link {
+    aspect-ratio: 1;
+    bottom: 1rem;
+    display: block;
+    position: absolute;
+    right: 1rem;
+
+    i {
+        font-size: 1rem;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -303,4 +316,3 @@ const fetchNextOffset = async (nextUrl: string | null) => {
     }
 }
 </style>
-<style lang="scss"></style>
