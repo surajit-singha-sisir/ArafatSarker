@@ -120,7 +120,7 @@
   }
 
   @media screen and (max-width: 420px) {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     letter-spacing: 6px;
   }
 }
@@ -280,18 +280,17 @@
     transform: translateX(-50%);
     width: 0.4rem;
     aspect-ratio: 1;
-    animation: bouncer-trial 1.5s cubic-bezier(0.47, 0, 0.75, 0.72) infinite
+    background-color: $primary;
+    animation: bouncer-trial 1.2s cubic-bezier(0.47, 0, 0.75, 0.72) infinite
       forwards;
     transition: all 0.3s ease;
   }
   @keyframes bouncer-trial {
     0%,
     100% {
-      background-color: $primary;
       top: 0.5rem;
     }
     80% {
-      background-color: #ff6beb;
       top: 70%;
     }
   }

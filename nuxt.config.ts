@@ -9,6 +9,12 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      // meta: [
+      //   {
+      //     name: "robots",
+      //     content: "index, follow"
+      //   }
+      // ],
       htmlAttrs: {
         lang: 'en'
       },
