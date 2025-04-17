@@ -256,3 +256,43 @@
 .h-100i {
   height: 100% !important;
 }
+.scroll-navigator {
+  position: relative;
+  width: 1.3rem;
+  height: 2.5rem;
+  transition: all 0.3s ease;
+
+  .border-round {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid $primary;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .navigator-anim {
+    color: $bg;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.4rem;
+    aspect-ratio: 1;
+    animation: bouncer-trial 1.5s cubic-bezier(0.47, 0, 0.75, 0.72) infinite
+      forwards;
+    transition: all 0.3s ease;
+  }
+  @keyframes bouncer-trial {
+    0%,
+    100% {
+      background-color: $primary;
+      top: 0.5rem;
+    }
+    80% {
+      background-color: #ff6beb;
+      top: 70%;
+    }
+  }
+}

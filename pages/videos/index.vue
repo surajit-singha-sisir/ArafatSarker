@@ -4,7 +4,6 @@
             <div class="showreel">
                 <div class="abs-center f-center f-col gap-20">
                     <h1 class="letter-spaced text-center">VIDEO SHOWCASE</h1>
-                    <NuxtLink to="#main" class="btn btn-primary btn-lg">Watch Portfolio</NuxtLink>
                 </div>
                 <div class="overlay"></div>
             </div>
@@ -43,10 +42,11 @@
                     </RevealAnimation>
                     <div class="f-center w-100 pad-tb--10"><span v-if="loading" class="d-block loaderX"></span></div>
                     <div else class="w-100 f-center m-b-30 cur-pointer">
-                        <button type="button" class="btn btn-primary m-t-20"
-                            @click="fetchNextOffset(item.pagination.next)">
-                            <p>Load More</p>
-                        </button>
+                        <NuxtLink :to="`/videos/${item.category_name}`"
+                            :title="`See All Videos of ${item.category_name}`" type="button"
+                            class="btn btn-primary m-t-20">
+                            <p>See All</p>
+                        </NuxtLink>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     <VideoPlayer v-if="videoData && currentQuality && !videoError" :src="currentQuality"
                         :qualities="['hd', 'sd']" :initial-quality="quality" :muted="isMuted" :autoplay="true"
                         @error="handleVideoError" @loaded="onVideoLoaded" @quality-changed="setQuality" />
-                    <div v-else-if="isVideoData && !videoError" class="facebook-reel-container">
+                    <div v-else-if="isVideoData && !videoError" class="facebook-reel-container facebook-vid-cont">
                         <iframe
                             :src="`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(currentReelLink)}`"
                             width="auto" height="900" style="border:none;" scrolling="no" frameborder="0"
@@ -94,6 +94,59 @@
 <style scoped lang="scss">
 .box:hover .video-title {
     top: 0 !important;
+}
+
+.facebook-vid-cont {
+    overflow: hidden;
+    height: 100%;
+}
+
+iframe {
+    width: 100%;
+}
+
+.content-container {
+    @media screen and (max-width: 520px) {
+        width: 90% !important;
+    }
+}
+
+.g-res-3-col-container {
+    @media screen and (max-width: 980px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (max-width: 520px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .video-title {
+        font-size: 0.8rem;
+    }
+}
+
+
+.reel {
+    width: 100% !important;
+    aspect-ratio: 3/4 !important;
+}
+
+.box .facebook-link {
+    aspect-ratio: 1;
+    bottom: 1rem;
+    display: block;
+    position: absolute;
+    right: 1rem;
+
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
+
+    i {
+        font-size: 1rem;
+    }
 }
 </style>
 
@@ -255,72 +308,5 @@ const closeModal = () => {
 };
 
 
-const fetchNextOffset = async (nextUrl: string | null) => {
-    if (!nextUrl || loading.value) return;
-
-    loading.value = true;
-    error.value = null;
-
-    try {
-        const response = await fetch(nextUrl, {
-            method: 'GET'
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result: ApiResponse = await response.json();
-
-        Object.entries(result).forEach(([categoryId, categoryData]) => {
-            if (reelsData.value?.[categoryId]) {
-                reelsData.value[categoryId].videos = [
-                    ...reelsData.value[categoryId].videos,
-                    ...categoryData.videos
-                ];
-                reelsData.value[categoryId].pagination = categoryData.pagination;
-            }
-        });
-
-    } catch (err) {
-        error.value = err instanceof Error ? err : new Error('Failed to fetch next page');
-        console.error('Error fetching next offset:', err);
-    } finally {
-        loading.value = false;
-    }
-};
 
 </script>
-
-<style scoped>
-.reel {
-    width: 100% !important;
-    aspect-ratio: 3/4 !important;
-}
-
-.box .facebook-link {
-    aspect-ratio: 1;
-    bottom: 1rem;
-    display: block;
-    position: absolute;
-    right: 1rem;
-
-    i {
-        font-size: 1rem;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .content-container {
-        width: 80% !important;
-    }
-}
-
-@media screen and (min-width: 521px) and (max-width: 720px) {
-
-    .g-res-container,
-    .grid-res-container {
-        grid-template-columns: repeat(1fr 1fr) !important;
-    }
-}
-</style>

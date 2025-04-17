@@ -20,7 +20,8 @@
             <transition :name="direction">
                 <div v-if="testimonials" class="testimonialX" :key="currentIndex">
                     <aside class="img-round">
-                        <NuxtImg :src="`https://arafatsarkar.com//${testimonials[currentIndex]?.profile_pic}`" alt="testimonial person image"/>
+                        <NuxtImg :src="`https://arafatsarkar.com/${testimonials[currentIndex]?.user_profile}`"
+                            alt="testimonial person image" />
                     </aside>
                     <aside class="details">
                         <span class="quote-left i-position"><i class="m-left-quote"></i></span>
@@ -42,15 +43,34 @@
     </div>
 </template>
 
+<style scoped lang="scss">
+.title {
+    h2 {}
+}
+
+@media screen and (max-width: 768px) {
+    .title {
+        flex-wrap: wrap;
+
+        h2 {
+            font-size: 1.2rem;
+        }
+    }
+}
+</style>
+
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 
 interface Testimonial {
-    id: number
-    name: string
-    desgination: string
-    testimonial: string
-    profile_pic: string
+    id: number;
+    name: string;
+    desgination: string;
+    address: string;
+    user_profile: string;
+    testimonial: string;
+    hide: boolean;
+    created_at: string;
 }
 
 const currentIndex = ref(0)

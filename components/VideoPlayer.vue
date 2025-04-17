@@ -482,7 +482,7 @@ watch(() => isPlaying.value, (newVal) => {
 
   .controls {
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     height: 2rem;
     margin-bottom: 0;

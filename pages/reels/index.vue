@@ -4,7 +4,10 @@
             <div class="showreel">
                 <div class="abs-center f-center f-col gap-20">
                     <h1 class="letter-spaced">SHOWREEL</h1>
-                    <NuxtLink to="#main" class="btn btn-primary btn-lg">Watch Portfolio</NuxtLink>
+                    <span class="scroll-navigator">
+                        <div class="border-round"></div>
+                        <div class="navigator-anim"></div>
+                    </span>
                 </div>
                 <div class="overlay"></div>
             </div>
@@ -44,12 +47,11 @@
                             </div>
                         </div>
                     </RevealAnimation>
-                    <div class="f-center w-100 pad-tb--10"><span v-if="loading" class="d-block loaderX"></span></div>
+                    <div class="f-center w-100 pad-tb--10"></div>
                     <div else class="w-100 f-center m-b-30 cur-pointer">
-                        <button type="button" class="btn btn-primary m-t-20"
-                            @click="fetchNextOffset(item.pagination.next)">
-                            <p>Load More</p>
-                        </button>
+                        <NuxtLink :to="`/reels/${item.category_name}`" title="" class="btn btn-primary m-t-20">
+                            <p>See All</p>
+                        </NuxtLink>
                     </div>
                 </div>
             </div>
@@ -247,40 +249,6 @@ const closeModal = () => {
 };
 
 
-const fetchNextOffset = async (nextUrl: string | null) => {
-    if (!nextUrl || loading.value) return;
-
-    loading.value = true;
-    error.value = null;
-
-    try {
-        const response = await fetch(nextUrl, {
-            method: 'GET'
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result: ApiResponse = await response.json();
-
-        Object.entries(result).forEach(([categoryId, categoryData]) => {
-            if (reelsData.value?.[categoryId]) {
-                reelsData.value[categoryId].reels = [
-                    ...reelsData.value[categoryId].reels,
-                    ...categoryData.reels
-                ];
-                reelsData.value[categoryId].pagination = categoryData.pagination;
-            }
-        });
-
-    } catch (err) {
-        error.value = err instanceof Error ? err : new Error('Failed to fetch next page');
-        console.error('Error fetching next offset:', err);
-    } finally {
-        loading.value = false;
-    }
-};
 
 </script>
 

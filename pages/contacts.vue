@@ -1,52 +1,62 @@
 <template>
-    <section class="contact-page">
-        <div class="banner">
-            <NuxtImg class="banner-img" src="images/contact.png" />
-        </div>
-        <div class="g-res-2-col-container gap-10 res-container m-auto">
-            <form action="" method="post" class="form f-center-start gap-20 f-col m-b-20">
-                <h4>Contact Me !</h4>
-                <div class="input-container border-all shadow"><input required type="text" class="input-field"
-                        placeholder=" "><span class="placeholder-text star">Enter Your Name</span></div>
-                <div class="input-container border-all shadow"><input required type="email" class="input-field"
-                        placeholder=" "><span class="placeholder-text">Enter Your Email</span></div>
-                <div class="input-container border-all shadow"><input required type="number" class="input-field"
-                        placeholder=" "><span class="placeholder-text star">Enter Your Phone</span></div>
-                <div class="input-container border-all shadow"><textarea required name="message" id="message"
-                        placeholder="" class="input-field"></textarea><span class="placeholder-text star">Enter Your
-                        Message</span></div>
-                <span>I will contact you as soon as possible through your mobile or email</span>
-                <div class="f-center w-100"><input type="submit" value="Submit"></div>
-            </form>
-            <div class="about-section m-b-20">
-                <div class="card-container">
-                    <div class="profile">
-                        <NuxtImg src="images/profile.png" />
+    <ClientOnly>
+        <section class="contact-page">
+            <div class="banner">
+                <NuxtImg class="banner-img" src="images/contact.png" />
+            </div>
+            <div class="g-res-2-col-container gap-10 res-container m-auto">
+                <form action="" method="post" class="form f-center-start gap-20 f-col m-b-20">
+                    <h4>Contact Me !</h4>
+                    <div class="input-container border-all shadow">
+                        <input required type="text" class="input-field" placeholder=" ">
+                        <span class="placeholder-text star">Enter Your Name</span>
                     </div>
-                    <div class="profile-card">
-                        <div class="w-100 f gap-10 f-col m-t-40">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>E-mail</td>
-                                        <td>:</td>
-                                        <td>arafat@gmail.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phone</td>
-                                        <td>:</td>
-                                        <td>+88018548548</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="input-container border-all shadow">
+                        <input required type="email" class="input-field" placeholder=" ">
+                        <span class="placeholder-text">Enter Your Email</span>
+                    </div>
+                    <div class="input-container border-all shadow">
+                        <input required type="number" class="input-field" placeholder=" ">
+                        <span class="placeholder-text star">Enter Your Phone</span>
+                    </div>
+                    <div class="input-container border-all shadow">
+                        <textarea required name="message" id="message" placeholder="" class="input-field"></textarea>
+                        <span class="placeholder-text star">Enter Your Message</span>
+                    </div>
+                    <span>I will contact you as soon as possible through your mobile or email</span>
+                    <div class="f-center w-100">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+                <div class="about-section m-b-20">
+                    <div class="card-container">
+                        <div class="profile">
+                            <NuxtImg src="images/profile.png" />
+                        </div>
+                        <div class="profile-card">
+                            <div class="w-100 f gap-10 f-col m-t-40">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>E-mail</td>
+                                            <td>:</td>
+                                            <td>arafat@gmail.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>:</td>
+                                            <td>+88018548548</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </ClientOnly>
 </template>
-
 
 <style lang="scss">
 @use "assets/styles/core/variables.scss" as *;
@@ -92,7 +102,6 @@
         @media screen and (max-width: 768px) {
             width: 100% !important;
         }
-
     }
 }
 

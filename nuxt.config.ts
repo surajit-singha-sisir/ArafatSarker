@@ -1,7 +1,6 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
-  // target: 'server',
   ssr: true,
 
   css: [
@@ -13,6 +12,7 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'en'
       },
+      titleTemplate: '%s',
       link: [
         {
           rel: 'stylesheet',
