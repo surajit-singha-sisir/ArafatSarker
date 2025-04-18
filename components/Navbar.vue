@@ -13,10 +13,6 @@
             <ul class="nav-links f-centered gap-10" :class="{ active: isHamburger }">
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/">HOME</NuxtLink>
-                </li>
-                <li class="nav-link">
-                    <i class="m-chevron-right"></i>
                     <NuxtLink class="linked" to="/reels">REELS</NuxtLink>
                 </li>
                 <li class="nav-link">
@@ -26,6 +22,11 @@
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
                     <NuxtLink class="linked" to="/#testimonial">TESTIMONIAL</NuxtLink>
+                </li>
+
+                <li class="nav-link">
+                    <i class="m-chevron-right"></i>
+                    <NuxtLink class="linked" to="#company">COMPANIES</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>

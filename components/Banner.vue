@@ -26,17 +26,15 @@
             <div class="cta-values" :class="{ 'active': activeIndex === 0 }">
                 <h1>{{ banner?.title1 }}</h1>
                 <h2>{{ banner?.subtitle1 }}</h2>
-                <button type="button" class="m-t-10 button-3d">Watch Portfolio</button>
+                <!-- <button type="button" class="m-t-10 button-3d">Watch Portfolio</button> -->
             </div>
             <div class="cta-values" :class="{ 'active': activeIndex === 1 }">
                 <h1>{{ banner?.title2 }}</h1>
                 <h2>{{ banner?.subtitle2 }}</h2>
-                <button type="button" class="m-t-10 button-3d">Watch Portfolio</button>
             </div>
             <div class="cta-values" :class="{ 'active': activeIndex === 2 }">
                 <h1>{{ banner?.title3 }}</h1>
                 <h2>{{ banner?.subtitle3 }}</h2>
-                <button type="button" class="m-t-10 button-3d">Watch Portfolio</button>
             </div>
 
             <div class="slider-action-buttons">

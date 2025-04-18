@@ -1,6 +1,7 @@
 <template>
     <section>
         <!-- SEO Configuration using @nuxtjs/seo -->
+
         <Head>
             <Title>{{ seo.title }}</Title>
             <Meta name="description" :content="seo.description" />
@@ -25,9 +26,7 @@
             <Meta name="twitter:creator" content="@arafatsarkar" />
 
             <!-- Schema.org for Google -->
-            <SchemaOrgWebSite
-                name="Arafat Sarkar"
-                :url="seo.canonical"
+            <SchemaOrgWebSite name="Arafat Sarkar" :url="seo.canonical"
                 description="Arafat Sarkar - Professional Cinematographer showcasing stunning reels, videos, and testimonials."
                 :publisher="{
                     '@type': 'Organization',
@@ -36,30 +35,23 @@
                         '@type': 'ImageObject',
                         url: 'https://arafatsarkar.com/images/logo.svg'
                     }
-                }"
-                creator="KEHEM IT"
-                :potentialAction="{
+                }" creator="KEHEM IT" :potentialAction="{
                     '@type': 'SearchAction',
                     target: 'https://arafatsarkar.com/search?q={search_term_string}',
                     'query-input': 'required name=search_term_string'
-                }"
-            />
-            <SchemaOrgPerson
-                name="Arafat Sarkar"
-                jobTitle="Cinematographer"
-                :url="seo.canonical"
-                :sameAs="[
-                    'https://www.facebook.com/arafatsarkarrasel1',
-                    'https://twitter.com/arafatsarkarofficial',
-                    'https://www.instagram.com/arafatsarkarofficial',
-                    'https://www.linkedin.com/in/arafatsarkarofficial'
-                ]"
-            />
+                }" />
+            <SchemaOrgPerson name="Arafat Sarkar" jobTitle="Cinematographer" :url="seo.canonical" :sameAs="[
+                'https://www.facebook.com/arafatsarkarrasel1',
+                'https://twitter.com/arafatsarkarofficial',
+                'https://www.instagram.com/arafatsarkarofficial',
+                'https://www.linkedin.com/in/arafatsarkarofficial'
+            ]" />
         </Head>
-        <Banner id="banner"/>
-        <Reels id="reels"/>
-        <Videos id="portfolio"/>
-        <Testimonials id="testimonial"/>
+        <Banner id="banner" />
+        <Reels id="reels" />
+        <Videos id="portfolio" />
+        <Testimonials id="testimonial" />
+        <Companies id="company" />
     </section>
 </template>
 
