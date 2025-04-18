@@ -10,31 +10,31 @@
             <NuxtLink to="/" class="logo w--80">
                 <NuxtImg class="w-100" src="images/logo.svg" alt="Arafat Sarkar Portfolio Logo" />
             </NuxtLink>
-            <ul class="nav-links f-centered gap-10" :class="{ active: isHamburger }">
+            <ul class="nav-links f-centered gap-10" :class="{ active: isHamburger }" >
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/reels">REELS</NuxtLink>
+                    <NuxtLink class="linked" to="/reels" :class="{ active: isHamburger }" @click="hamburger">REELS</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/videos">VIDEOS</NuxtLink>
+                    <NuxtLink class="linked" to="/videos" :class="{ active: isHamburger }" @click="hamburger">VIDEOS</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/#testimonial">TESTIMONIAL</NuxtLink>
+                    <NuxtLink class="linked" to="/#testimonial" :class="{ active: isHamburger }" @click="hamburger">TESTIMONIAL</NuxtLink>
                 </li>
 
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="#company">COMPANIES</NuxtLink>
+                    <NuxtLink class="linked" to="/#company" :class="{ active: isHamburger }" @click="hamburger">COMPANIES</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/about">ABOUT</NuxtLink>
+                    <NuxtLink class="linked" to="/about" :class="{ active: isHamburger }" @click="hamburger">ABOUT</NuxtLink>
                 </li>
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/contacts">CONTACTS</NuxtLink>
+                    <NuxtLink class="linked" to="/contacts" :class="{ active: isHamburger }" @click="hamburger">CONTACTS</NuxtLink>
                 </li>
             </ul>
 
