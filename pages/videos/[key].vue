@@ -1,84 +1,22 @@
 <template>
   <section class="reel-page">
-    <!-- SEO Configuration using @nuxtjs/seo -->
-    <Head>
-      <Title>{{ seo.title }}</Title>
-      <Meta name="description" :content="seo.description" />
-      <Meta name="keywords" :content="seo.keywords" />
-      <Link rel="canonical" :href="seo.canonical" />
-
-      <!-- Open Graph / Facebook -->
-      <Meta property="og:type" content="website" />
-      <Meta property="og:url" :content="seo.canonical" />
-      <Meta property="og:title" :content="seo.title" />
-      <Meta property="og:description" :content="seo.description" />
-      <Meta property="og:image" :content="seo.ogImage" />
-      <Meta property="og:site_name" content="Arafat Sarkar" />
-      <Meta property="og:locale" content="en_US" />
-
-      <!-- Twitter -->
-      <Meta name="twitter:card" content="summary_large_image" />
-      <Meta name="twitter:url" :content="seo.canonical" />
-      <Meta name="twitter:title" :content="seo.title" />
-      <Meta name="twitter:description" :content="seo.description" />
-      <Meta name="twitter:image" :content="seo.ogImage" />
-      <Meta name="twitter:creator" content="@arafatsarkar" />
-
-      <!-- Schema.org for Google -->
-      <SchemaOrgVideoObject
-        v-if="firstVideo"
-        :name="firstVideo.title"
-        :description="firstVideo.title + ' - A cinematic video by Arafat Sarkar'"
-        :thumbnail-url="`${URL}${firstVideo.thumbnail}`"
-        :content-url="firstVideo.reel_link"
-        :upload-date="firstVideo.created_at"
-        :publisher="{
-          '@type': 'Person',
-          name: 'Arafat Sarkar',
-          url: 'https://arafatsarkar.com',
-          sameAs: [
-            'https://www.facebook.com/arafatsarkarrasel1',
-            'https://twitter.com/arafatsarkarofficial',
-            'https://www.instagram.com/arafatsarkarofficial',
-            'https://www.linkedin.com/in/arafatsarkarofficial'
-          ]
-        }"
-      />
-    </Head>
-
     <div class="inner-reel-page">
       <div class="showreel">
         <div class="abs-center f-center f-col gap-20">
-          <h1 class="letter-spaced">{{ key }}</h1>
+          <h1 class="letter-spaced">{{ key }} Videos</h1>
         </div>
         <div class="overlay"></div>
       </div>
-      <br><br>
+      <br /><br />
 
       <div class="content-container">
         <div :id="item.category_name" class="inner-content-container" v-for="(item, i) in reelsData" :key="i">
-          <h2>{{ item.category_name }}</h2>
           <RevealAnimation class="g-res-3-col-container gap-05">
-            <div
-              class="video-container-view"
-              :data-direction="randomDirection()"
-              ref="reelContainer"
-              v-for="(reel, index) in item.videos"
-              :key="reel.id"
-              :class="`box`"
-            >
-              <NuxtImg
-                class="video-thumb video-thumb-height"
-                :src="`${URL}${reel.thumbnail}`"
-                :alt="`${reel.title} video thumbnail`"
-                :title="`Watch ${reel.title} video`"
-                width="400"
-                height="533"
-                format="webp"
-                quality="80"
-                loading="lazy"
-                @click="playReel(index, reel.reel_link)"
-              />
+            <div class="video-container-view" :data-direction="randomDirection()" ref="reelContainer"
+              v-for="(reel, index) in item.videos" :key="reel.id" :class="`box`">
+              <NuxtImg class="video-thumb video-thumb-height" :src="`${URL}${reel.thumbnail}`"
+                :alt="`${reel.title} video thumbnail`" :title="`Watch ${reel.title} video`" width="400" height="533"
+                format="webp" quality="80" loading="lazy" @click="playReel(index, reel.reel_link)" />
               <span class="video-title">
                 <p class="text-dotted-2">{{ reel.title }}</p>
               </span>
@@ -106,28 +44,15 @@
       <!-- Modal -->
       <ModalBox v-if="showModal" :is-open="showModal" @close="closeModal">
         <template #main>
-          <VideoPlayer
-            v-if="videoData && currentQuality && !videoError"
-            :src="currentQuality"
-            :qualities="['hd', 'sd']"
-            :initial-quality="quality"
-            :muted="isMuted"
-            :autoplay="true"
-            @error="handleVideoError"
-            @loaded="onVideoLoaded"
-            @quality-changed="setQuality"
-          />
+          <VideoPlayer v-if="videoData && currentQuality && !videoError" :src="currentQuality" :qualities="['hd', 'sd']"
+            :initial-quality="quality" :muted="isMuted" :autoplay="true" @error="handleVideoError"
+            @loaded="onVideoLoaded" @quality-changed="setQuality" />
           <div v-else-if="isVideoData && !videoError" class="facebook-reel-container">
-            <iframe
-              :src="`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(currentReelLink)}`"
-              width="auto"
-              height="900"
-              style="border:none;"
-              scrolling="no"
-              frameborder="0"
+            <iframe :src="`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
+              currentReelLink
+            )}`" width="auto" height="900" style="border:none;" scrolling="no" frameborder="0"
               allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-              @error="handleVideoError"
-            ></iframe>
+              @error="handleVideoError"></iframe>
           </div>
           <VideoLoading v-if="loading || videoError" class="video-skeleton" />
         </template>
@@ -135,25 +60,13 @@
           <div class="related-videos">
             <h4>Related Videos</h4>
             <div class="w-100 f-center-start f-col gap-10">
-              <div
-                v-for="(item, index) in allReels"
-                :key="item.id"
-                class="f gap-10 video-border w-100 cur-pointer text-hov-u"
-                @click="playRelatedReel(index)"
-              >
+              <div v-for="(item, index) in allReels" :key="item.id"
+                class="f gap-10 video-border w-100 cur-pointer text-hov-u" @click="playRelatedReel(index)">
                 <div class="col-1 border">
                   <div class="w--60">
-                    <NuxtImg
-                      class="img square center"
-                      :src="`${URL}${item.thumbnail}`"
-                      :alt="`${item.title} related video thumbnail`"
-                      :title="`Watch ${item.title} related video`"
-                      width="60"
-                      height="60"
-                      format="webp"
-                      quality="80"
-                      loading="lazy"
-                    />
+                    <NuxtImg class="img square center" :src="`${URL}${item.thumbnail}`"
+                      :alt="`${item.title} related video thumbnail`" :title="`Watch ${item.title} related video`"
+                      width="60" height="60" format="webp" quality="80" loading="lazy" />
                   </div>
                 </div>
                 <div class="col-2">
@@ -169,213 +82,320 @@
 </template>
 
 <script setup lang="ts">
-const key = useRoute().params.key as string;
+const key = useRoute().params.key as string
 
 interface Video {
-  id: number;
-  created_at: string;
-  type: string;
-  thumbnail: string;
-  title: string;
-  reel_link: string;
-  tag: string;
-  hide: boolean;
-  category: number;
+  id: number
+  created_at: string
+  type: string
+  thumbnail: string
+  title: string
+  reel_link: string
+  tag: string
+  hide: boolean
+  category: number
 }
 
 interface Pagination {
-  count: number;
-  num_pages: number;
-  current_page: number;
-  next: string | null;
-  previous: string | null;
-  page_size: number;
-  has_next: boolean;
-  has_previous: boolean;
+  count: number
+  num_pages: number
+  current_page: number
+  next: string | null
+  previous: string | null
+  page_size: number
+  has_next: boolean
+  has_previous: boolean
 }
 
 interface Category {
-  category_name: string;
-  videos: Video[];
-  pagination: Pagination;
+  category_name: string
+  videos: Video[]
+  pagination: Pagination
 }
 
 interface ApiResponse {
-  [categoryId: string]: Category;
+  [categoryId: string]: Category
 }
 
 interface VideoData {
-  title?: string;
-  hd?: string;
-  sd?: string;
+  title?: string
+  hd?: string
+  sd?: string
 }
 
 // State
-const URL = ref('https://arafatsarkar.com');
-const reelContainer = ref<HTMLElement | null>(null);
-const loading = ref(false);
-const error = ref<Error | null>(null);
-const showModal = ref(false);
-const videoData = ref<VideoData | null>(null);
-const videoError = ref(false);
-const isVideoData = ref(false);
-const currentReelLink = ref('');
-const quality = ref<'hd' | 'sd'>('hd');
-const isMuted = ref(true);
+const URL = ref('https://arafatsarkar.com')
+const reelContainer = ref<HTMLElement | null>(null)
+const loading = ref(false)
+const error = ref<Error | null>(null)
+const showModal = ref(false)
+const videoData = ref<VideoData | null>(null)
+const videoError = ref(false)
+const isVideoData = ref(false)
+const currentReelLink = ref('')
+const quality = ref<'hd' | 'sd'>('hd')
+const isMuted = ref(true)
 
-// Fetch dynamic data
 const { data: reelsData, status } = await useFetch<ApiResponse>(
   `${URL.value}/api/api_video_page?category=${key}&page=1&type=video`,
   {
     method: 'GET',
   }
-);
+)
 
-// Compute first video for Schema.org
 const firstVideo = computed(() => {
-  if (!reelsData.value) return null;
-  const categories = Object.values(reelsData.value);
-  return categories[0]?.videos[0] || null;
-});
+  if (!reelsData.value) return null
+  const categories = Object.values(reelsData.value)
+  return categories[0]?.videos[0] || null
+})
 
-// SEO configuration
-const seo = computed(() => ({
-  title: `Arafat Sarkar | ${key.charAt(0).toUpperCase() + key.slice(1)}`,
-  description: `Explore ${key} videos by Arafat Sarkar, showcasing professional cinematography in Bangladesh. Watch stunning videography and filmmaking content.`,
-  keywords: `Arafat Sarkar, ${key} videos, cinematography, videography, Bangladesh, filmmaking, portfolio`,
-  canonical: `https://arafatsarkar.com/videos/${key}`,
-  ogImage: firstVideo.value ? `${URL.value}${firstVideo.value.thumbnail}` : 'https://arafatsarkar.com/images/videos.png',
-}));
+useHead({
+  title: computed(
+    () => `Arafat Sarkar | ${key.charAt(0).toUpperCase() + key.slice(1)} Videos`
+  ),
+  meta: [
+    {
+      name: 'description',
+      content: computed(
+        () =>
+          `Explore ${key} videos by Arafat Sarkar, showcasing professional cinematography in Bangladesh. Watch stunning videography and filmmaking content.`
+      ),
+    },
+    {
+      name: 'keywords',
+      content: computed(
+        () =>
+          `Arafat Sarkar, ${key} videos, cinematography, videography, Bangladesh, filmmaking, portfolio`
+      ),
+    },
+    // Open Graph / Facebook
+    { property: 'og:type', content: 'website' },
+    {
+      property: 'og:url',
+      content: computed(() => `https://arafatsarkar.com/videos/${key}`),
+    },
+    {
+      property: 'og:title',
+      content: computed(
+        () => `Arafat Sarkar | ${key.charAt(0).toUpperCase() + key.slice(1)}`
+      ),
+    },
+    {
+      property: 'og:description',
+      content: computed(
+        () =>
+          `Explore ${key} videos by Arafat Sarkar, showcasing professional cinematography in Bangladesh. Watch stunning videography and filmmaking content.`
+      ),
+    },
+    {
+      property: 'og:image',
+      content: computed(() =>
+        firstVideo.value
+          ? `${URL.value}${firstVideo.value.thumbnail}`
+          : 'https://arafatsarkar.com/images/videos.png'
+      ),
+    },
+    { property: 'og:site_name', content: 'Arafat Sarkar' },
+    { property: 'og:locale', content: 'en_US' },
+    // Twitter
+    { name: 'twitter:card', content: 'summary_large_image' },
+    {
+      name: 'twitter:url',
+      content: computed(() => `https://arafatsarkar.com/videos/${key}`),
+    },
+    {
+      property: 'twitter:title',
+      content: computed(
+        () => `Arafat Sarkar | ${key.charAt(0).toUpperCase() + key.slice(1)}`
+      ),
+    },
+    {
+      property: 'twitter:description',
+      content: computed(
+        () =>
+          `Explore ${key} videos by Arafat Sarkar, showcasing professional cinematography in Bangladesh. Watch stunning videography and filmmaking content.`
+      ),
+    },
+    {
+      property: 'twitter:image',
+      content: computed(() =>
+        firstVideo.value
+          ? `${URL.value}${firstVideo.value.thumbnail}`
+          : 'https://arafatsarkar.com/images/videos.png'
+      ),
+    },
+    { name: 'twitter:creator', content: '@arafatsarkar' },
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: computed(() => `https://arafatsarkar.com/videos/${key}`),
+    },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: computed(() =>
+        firstVideo.value
+          ? {
+            '@context': 'https://schema.org',
+            '@type': 'VideoObject',
+            name: firstVideo.value.title,
+            description: `${firstVideo.value.title} - A cinematic video by Arafat Sarkar`,
+            thumbnailUrl: `${URL.value}${firstVideo.value.thumbnail}`,
+            contentUrl: firstVideo.value.reel_link,
+            uploadDate: firstVideo.value.created_at,
+            publisher: {
+              '@type': 'Person',
+              name: 'Arafat Sarkar',
+              url: 'https://arafatsarkar.com',
+              sameAs: [
+                'https://www.facebook.com/arafatsarkarrasel1',
+                'https://twitter.com/arafatsarkarofficial',
+                'https://www.instagram.com/arafatsarkarofficial',
+                'https://www.linkedin.com/in/arafatsarkarofficial',
+              ],
+            },
+          }
+          : {}
+      ),
+    },
+  ],
+})
 
 const allReels = computed(() => {
-  if (!reelsData.value) return [];
-  return Object.values(reelsData.value).flatMap(category => category.videos);
-});
+  if (!reelsData.value) return []
+  return Object.values(reelsData.value).flatMap((category) => category.videos)
+})
 
 const currentQuality = computed(() => {
-  return quality.value === 'hd' ? videoData.value?.hd : videoData.value?.sd;
-});
+  return quality.value === 'hd' ? videoData.value?.hd : videoData.value?.sd
+})
 
 const randomDirection = () => {
-  const directions = ['left', 'right', 'top', 'bottom'];
-  return directions[Math.floor(Math.random() * directions.length)];
-};
+  const directions = ['left', 'right', 'top', 'bottom']
+  return directions[Math.floor(Math.random() * directions.length)]
+}
 
 const fetchVideoData = async () => {
-  const urlToFetch = currentReelLink.value;
+  const urlToFetch = currentReelLink.value
   if (!urlToFetch) {
-    error.value = new Error('Please provide a video URL');
-    videoError.value = true;
-    return;
+    error.value = new Error('Please provide a video URL')
+    videoError.value = true
+    return
   }
 
-  loading.value = true;
-  videoError.value = false;
-  error.value = null;
-  const startTime = Date.now();
-  const MIN_LOADING_TIME = 2000;
+  loading.value = true
+  videoError.value = false
+  error.value = null
+  const startTime = Date.now()
+  const MIN_LOADING_TIME = 2000
 
   try {
-    const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`);
-    const result = await response.json();
-    videoData.value = result;
+    const response = await fetch(
+      `https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(
+        urlToFetch
+      )}`
+    )
+    const result = await response.json()
+    videoData.value = result
 
-    const elapsedTime = Date.now() - startTime;
-    const remainingTime = MIN_LOADING_TIME - elapsedTime;
+    const elapsedTime = Date.now() - startTime
+    const remainingTime = MIN_LOADING_TIME - elapsedTime
     if (remainingTime > 0) {
-      await new Promise(resolve => setTimeout(resolve, remainingTime));
+      await new Promise((resolve) => setTimeout(resolve, remainingTime))
     }
 
     if (result.status === 'success') {
-      videoData.value = result.data;
-      isVideoData.value = false;
+      videoData.value = result.data
+      isVideoData.value = false
     } else {
-      error.value = new Error(result.message || 'Failed to load video');
-      isVideoData.value = true;
+      error.value = new Error(result.message || 'Failed to load video')
+      isVideoData.value = true
     }
   } catch (err) {
-    const elapsedTime = Date.now() - startTime;
-    const remainingTime = MIN_LOADING_TIME - elapsedTime;
+    const elapsedTime = Date.now() - startTime
+    const remainingTime = MIN_LOADING_TIME - elapsedTime
     if (remainingTime > 0) {
-      await new Promise(resolve => setTimeout(resolve, remainingTime));
+      await new Promise((resolve) => setTimeout(resolve, remainingTime))
     }
-    error.value = err instanceof Error ? err : new Error(String(err));
-    videoError.value = true;
-    isVideoData.value = true;
+    error.value = err instanceof Error ? err : new Error(String(err))
+    videoError.value = true
+    isVideoData.value = true
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 
 const playReel = (index: number, link: string) => {
-  currentReelLink.value = link;
-  showModal.value = true;
-  fetchVideoData();
-};
+  currentReelLink.value = link
+  showModal.value = true
+  fetchVideoData()
+}
 
 const playRelatedReel = (index: number) => {
-  currentReelLink.value = allReels.value[index].reel_link;
-  videoData.value = null;
-  fetchVideoData();
-};
+  currentReelLink.value = allReels.value[index].reel_link
+  videoData.value = null
+  fetchVideoData()
+}
 
 const setQuality = (newQuality: string) => {
-  const validQuality = newQuality === 'hd' || newQuality === 'sd' ? newQuality : 'hd';
-  quality.value = validQuality;
-};
+  const validQuality = newQuality === 'hd' || newQuality === 'sd' ? newQuality : 'hd'
+  quality.value = validQuality
+}
 
 const handleVideoError = () => {
-  videoError.value = true;
-};
+  videoError.value = true
+}
 
 const onVideoLoaded = () => {
-  videoError.value = false;
-};
+  videoError.value = false
+}
 
 const closeModal = () => {
-  showModal.value = false;
-  videoData.value = null;
-  videoError.value = false;
-  isVideoData.value = false;
-  currentReelLink.value = '';
-};
+  showModal.value = false
+  videoData.value = null
+  videoError.value = false
+  isVideoData.value = false
+  currentReelLink.value = ''
+}
 
 const fetchNextOffset = async (categoryItem: Category) => {
-  if (!categoryItem.pagination.has_next || loading.value) return;
+  if (!categoryItem.pagination.has_next || loading.value) return
 
-  loading.value = true;
-  error.value = null;
+  loading.value = true
+  error.value = null
 
   try {
-    const nextPage = categoryItem.pagination.current_page + 1;
-    const nextUrl = `${URL.value}/api/api_video_page?category=${key}&page=${nextPage}&type=video`;
+    const nextPage = categoryItem.pagination.current_page + 1
+    const nextUrl = `${URL.value}/api/api_video_page?category=${key}&page=${nextPage}&type=video`
 
     const response = await fetch(nextUrl, {
       method: 'GET',
-    });
+    })
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    const result: ApiResponse = await response.json();
+    const result: ApiResponse = await response.json()
 
     Object.entries(result).forEach(([categoryId, categoryData]) => {
       if (reelsData.value?.[categoryId]) {
         reelsData.value[categoryId].videos = [
           ...reelsData.value[categoryId].videos,
           ...categoryData.videos,
-        ];
-        reelsData.value[categoryId].pagination = categoryData.pagination;
+        ]
+        reelsData.value[categoryId].pagination = categoryData.pagination
       }
-    });
+    })
   } catch (err) {
-    error.value = err instanceof Error ? err : new Error('Failed to fetch next page');
-    console.error('Error fetching next offset:', err);
+    error.value = err instanceof Error ? err : new Error('Failed to fetch next page')
+    console.error('Error fetching next offset:', err)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

@@ -97,31 +97,26 @@
   right: 0;
   background-color: #000000b0;
 }
-.modal-in {
-  animation: modal-in 0.5s ease forwards;
+.modal-ins {
+  animation: modal-ins 0.5s ease forwards;
 }
-.modal-out {
-  animation: modal-out 0.5s ease forwards;
+.modal-outs {
+  animation: modal-outs 0.5s ease forwards;
 }
-@keyframes modal-in {
+@keyframes modal-ins {
   0% {
     opacity: 0;
-    // top: -120%;
-    // visibility: hidden;
   }
   100% {
     opacity: 1;
-    // top: 50%;
   }
 }
-@keyframes modal-out {
+@keyframes modal-outs {
   0% {
     opacity: 1;
-    // top: 50%;
   }
   100% {
     opacity: 0;
-    // top: -120%;
   }
 }
 

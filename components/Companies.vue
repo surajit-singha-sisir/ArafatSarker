@@ -18,12 +18,12 @@
     width: 90%;
     margin: 0 auto;
     margin-top: 5rem;
+    overflow: hidden;
 
     h1 {
         color: #444144;
 
         @media screen and (max-width: 520px) {
-            font-size: 1.2rem;
             font-weight: 600;
         }
     }
@@ -32,22 +32,26 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-wrap: wrap;
         gap: 1rem;
+        overflow-x: hidden;
 
         @media screen and (max-width: 920px) {
             flex-wrap: wrap;
         }
 
         @media screen and (max-width: 520px) {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            width: 90%;
+            &::-webkit-scrollbar {
+                width: none;
+            }
 
             .comp-item {
-                width: 100%;
+                width: 5rem !important;
+                aspect-ratio: 1;
+                scroll-snap-type: mandatory;
 
                 .comp-name {
-                    font-size: 0.7rem;
+                    font-size: 0.8rem;
                 }
             }
         }
@@ -64,7 +68,7 @@
         .comp-name {
             position: absolute;
             bottom: -100%;
-            background-color: #444144;
+            background-color: #444144e5;
             width: 100%;
             height: 100%;
             text-align: center;
@@ -74,6 +78,7 @@
             padding: 0.5rem;
             transition: all 0.3s ease;
             color: #fff;
+            font-size: 1.2rem;
         }
 
         &:hover .comp-name {

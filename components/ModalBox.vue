@@ -1,5 +1,5 @@
 <template>
-  <div class="video-modal-box" :class="{ 'modal-out': !isModalOpen, 'modal-in': isModalOpen }">
+  <div class="video-modal-box" :class="{ 'modal-outs': !isModalOpen, 'modal-ins': isModalOpen }">
     <div class="inner-modal-box">
       <button class="abs-top-right cur-pointer" @click="closeModal"><i class="m-cross1"></i></button>
       <aside class="main-window">
@@ -28,7 +28,7 @@ const isModalOpen = ref(true)
 
 const closeModal = () => {
   isModalOpen.value = false
-  document.body.style.overflow = ''; // Restore scroll
+  document.body.style.overflow = '';
   setTimeout(() => {
     emit('close')
   }, 500)

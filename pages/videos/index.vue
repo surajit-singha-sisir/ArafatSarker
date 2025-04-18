@@ -25,21 +25,6 @@
             <Meta name="twitter:image" :content="seo.ogImage" />
             <Meta name="twitter:creator" content="@arafatsarkar" />
 
-            <!-- Schema.org for Google -->
-            <SchemaOrgVideoObject v-if="firstVideo" :name="firstVideo.title"
-                :description="firstVideo.title + ' - A cinematic video by Arafat Sarkar'"
-                :thumbnail-url="`${URL}${firstVideo.thumbnail}`" :content-url="firstVideo.reel_link"
-                :upload-date="firstVideo.created_at" :publisher="{
-                    '@type': 'Person',
-                    name: 'Arafat Sarkar',
-                    url: 'https://arafatsarkar.com',
-                    sameAs: [
-                        'https://www.facebook.com/arafatsarkarrasel1',
-                        'https://twitter.com/arafatsarkarofficial',
-                        'https://www.instagram.com/arafatsarkarofficial',
-                        'https://www.linkedin.com/in/arafatsarkarofficial'
-                    ]
-                }" />
         </Head>
 
         <div class="inner-reel-page">
@@ -108,7 +93,7 @@
                     <VideoPlayer v-if="videoData && currentQuality && !videoError" :src="currentQuality"
                         :qualities="['hd', 'sd']" :initial-quality="quality" :muted="isMuted" :autoplay="true"
                         @error="handleVideoError" @loaded="onVideoLoaded" @quality-changed="setQuality" />
-                    <div v-else-if="isVideoData && !videoError" class="facebook-reel-container facebook-vid-cont">
+                    <div v-else-if="isVideoData && !videoError" class="facebook-reel-container">
                         <iframe
                             :src="`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(currentReelLink)}`"
                             width="auto" height="900" style="border:none;" scrolling="no" frameborder="0"
@@ -127,9 +112,7 @@
                                 <div class="col-1 border">
                                     <div class="w--60">
                                         <NuxtImg class="img square center" :src="`${URL}${item.thumbnail}`"
-                                            :alt="`${item.title} related video thumbnail`"
-                                            :title="`Watch ${item.title} related video`" width="60" height="60"
-                                            format="webp" quality="80" loading="lazy" />
+                                            :alt="item.title" />
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -192,7 +175,7 @@ const videoData = ref<VideoData | null>(null);
 const videoError = ref(false);
 const isVideoData = ref(false);
 const currentReelLink = ref('');
-const quality = ref<'hd' | 'sd'>('hd');
+const quality = ref<'hd' | 'sd'>('sd');
 const isMuted = ref(true);
 
 // Fetch dynamic data
@@ -210,6 +193,8 @@ const firstVideo = computed(() => {
     return categories[0]?.videos[0] || null;
 });
 
+
+
 // SEO configuration
 const seo = computed(() => ({
     title: 'Arafat Sarkar | Videos',
@@ -218,7 +203,37 @@ const seo = computed(() => ({
     canonical: 'https://arafatsarkar.com/videos',
     ogImage: firstVideo.value ? `${URL.value}${firstVideo.value.thumbnail}` : 'https://arafatsarkar.com/images/videos.png',
 }));
-
+useHead({
+    script: [
+        {
+            type: 'application/ld+json',
+            innerHTML: computed(() =>
+                firstVideo.value
+                    ? {
+                        '@context': 'https://schema.org',
+                        '@type': 'VideoObject',
+                        name: firstVideo.value.title,
+                        description: firstVideo.value.title + ' - A cinematic video by Arafat Sarkar',
+                        thumbnailUrl: `${URL.value}${firstVideo.value.thumbnail}`,
+                        contentUrl: firstVideo.value.reel_link,
+                        uploadDate: firstVideo.value.created_at,
+                        publisher: {
+                            '@type': 'Person',
+                            name: 'Arafat Sarkar',
+                            url: 'https://arafatsarkar.com',
+                            sameAs: [
+                                'https://www.facebook.com/arafatsarkarrasel1',
+                                'https://twitter.com/arafatsarkarofficial',
+                                'https://www.instagram.com/arafatsarkarofficial',
+                                'https://www.linkedin.com/in/arafatsarkarofficial',
+                            ],
+                        },
+                    }
+                    : {}
+            ),
+        },
+    ],
+})
 const allReels = computed(() => {
     if (!reelsData.value) return [];
     return Object.values(reelsData.value).flatMap(category => category.videos);
@@ -234,49 +249,49 @@ const randomDirection = () => {
 };
 
 const fetchVideoData = async () => {
-    const urlToFetch = currentReelLink.value;
+    const urlToFetch = currentReelLink.value
     if (!urlToFetch) {
-        error.value = new Error('Please provide a video URL');
-        videoError.value = true;
-        return;
+        videoError.value = true
+        return
     }
 
-    loading.value = true;
-    videoError.value = false;
-    error.value = null;
-    const startTime = Date.now();
-    const MIN_LOADING_TIME = 2000;
+    loading.value = true
+    videoError.value = false
+    error.value = null
+    const startTime = Date.now()
+    const MIN_LOADING_TIME = 2000
 
     try {
-        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`);
-        const result = await response.json();
+        const response = await fetch(`https://arafatsarkar.com/api/video-info?link=${encodeURIComponent(urlToFetch)}`)
+        const result = await response.json()
+        videoData.value = result
 
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = MIN_LOADING_TIME - elapsedTime;
+
+        const elapsedTime = Date.now() - startTime
+        const remainingTime = MIN_LOADING_TIME - elapsedTime
         if (remainingTime > 0) {
-            await new Promise(resolve => setTimeout(resolve, remainingTime));
+            await new Promise(resolve => setTimeout(resolve, remainingTime))
         }
+        videoData.value = result
 
         if (result.status === 'success') {
-            videoData.value = result.data;
-            isVideoData.value = false;
+            isVideoData.value = false
         } else {
-            error.value = new Error(result.message || 'Failed to load video');
-            isVideoData.value = true;
+            error.value = result.message || 'Failed to load reel'
+            isVideoData.value = true
         }
     } catch (err) {
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = MIN_LOADING_TIME - elapsedTime;
+        const elapsedTime = Date.now() - startTime
+        const remainingTime = MIN_LOADING_TIME - elapsedTime
         if (remainingTime > 0) {
-            await new Promise(resolve => setTimeout(resolve, remainingTime));
+            await new Promise(resolve => setTimeout(resolve, remainingTime))
         }
-        error.value = err instanceof Error ? err : new Error(String(err));
-        videoError.value = true;
-        isVideoData.value = true;
+        videoError.value = true
+        isVideoData.value = true
     } finally {
-        loading.value = false;
+        loading.value = false
     }
-};
+}
 
 const playReel = (index: number, link: string) => {
     currentReelLink.value = link;
@@ -310,6 +325,43 @@ const closeModal = () => {
     isVideoData.value = false;
     currentReelLink.value = '';
 };
+
+
+const fetchNextOffset = async (nextUrl: string | null) => {
+    if (!nextUrl || loading.value) return;
+
+    loading.value = true;
+    error.value = null;
+
+    try {
+        const response = await fetch(nextUrl, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result: ApiResponse = await response.json();
+
+        Object.entries(result).forEach(([categoryId, categoryData]) => {
+            if (reelsData.value?.[categoryId]) {
+                reelsData.value[categoryId].videos = [
+                    ...reelsData.value[categoryId].videos,
+                    ...categoryData.videos
+                ];
+                reelsData.value[categoryId].pagination = categoryData.pagination;
+            }
+        });
+
+    } catch (err) {
+        error.value = err instanceof Error ? err : new Error('Failed to fetch next page');
+        console.error('Error fetching next offset:', err);
+    } finally {
+        loading.value = false;
+    }
+};
+
 </script>
 
 <style scoped lang="scss">
