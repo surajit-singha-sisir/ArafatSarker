@@ -2,53 +2,13 @@
     <section class="videos-container">
         <div class="inner-videos">
             <h2 class="text-center m-b-20">Videos</h2>
-            <!-- <div class="video-container">
-                <RevealAnimation class="front-video-container" ref="reelContainer">
-
-                    <div class="video" v-for="(video, index) in Videos" :key="index"
-                        :data-direction="randomDirection()">
-                        <div class="category">
-                            <p class="text-dotted-2 text-center">{{ video.name }} Videos</p>
-                            <NuxtLink :to="`/videos/${video.name}`" class="btn btn-primary btn-sm">View all
-                            </NuxtLink>
-                        </div>
-                        <NuxtImg class="img w-full object-cover"
-                            :src="`${URL}${video.thumbnail[0] || '/placeholder.jpg'}`" :alt="video.name"
-                            loading="lazy" />
-                        <NuxtImg class="img w-full object-cover"
-                            :src="`${URL}${video.thumbnail[1] || '/placeholder.jpg'}`" :alt="video.name"
-                            loading="lazy" />
-                        <NuxtImg class="img w-full object-cover"
-                            :src="`${URL}${video.thumbnail[2] || '/placeholder.jpg'}`" :alt="video.name"
-                            loading="lazy" />
-                    </div>
-                    <div class="rows">
-                        <div class="video">
-                            <div class="category">
-                                <p class="text-dotted-2 text-center">Corporate Videos</p>
-                                <NuxtLink :to="`/videos/`" class="btn btn-primary btn-sm">View all
-                                </NuxtLink>
-                            </div>
-                            <NuxtImg class="custom-image-prev"
-                                src="https://arafatsarkar.com/media/arafat/thumb-24.webp" alt="video.name"
-                                loading="lazy" />
-                            <NuxtImg class="custom-image-prev"
-                                src="https://arafatsarkar.com/media/arafat/thumb-24.webp" alt="video.name"
-                                loading="lazy" />
-                            <NuxtImg class="custom-image-prev"
-                                src="https://arafatsarkar.com/media/arafat/thumb-24.webp" alt="video.name"
-                                loading="lazy" />
-                        </div>
-                    </div>
-                </RevealAnimation>
-            </div> -->
 
             <div class="front-video-container">
                 <div class="row" v-for="(item, ind) in Videos" :key="ind">
                     <div class="video">
                         <div class="category">
-                            <p class="text-dotted-2 text-center">{{ item.name }} Videos</p>
-                            <NuxtLink :to="`/videos/${item.name.trim().replaceAll(' ', '-')}`" class="btn btn-primary">
+                            <p class="text-dotted-2 text-center">{{ item.name }}</p>
+                            <NuxtLink :to="`/videos/${item.name.trim()}`" class="btn btn-primary">
                                 View all
                             </NuxtLink>
                         </div>
