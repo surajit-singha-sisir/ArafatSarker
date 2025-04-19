@@ -9,12 +9,6 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      // meta: [
-      //   {
-      //     name: "robots",
-      //     content: "index, follow"
-      //   }
-      // ],
       htmlAttrs: {
         lang: 'en'
       },
@@ -37,6 +31,5 @@ export default defineNuxtConfig({
     port: 3000
   },
 
-  modules: ['@nuxt/image', '@nuxtjs/seo'],
-  // plugins: ['kehem-tooltip'],
+  modules: ['@nuxt/image', '@nuxtjs/seo', 'nuxt-og-image'],
 })

@@ -26,10 +26,6 @@
 
                 <li class="nav-link">
                     <i class="m-chevron-right"></i>
-                    <NuxtLink class="linked" to="/#company" :class="{ active: isHamburger }" @click="hamburger">COMPANIES</NuxtLink>
-                </li>
-                <li class="nav-link">
-                    <i class="m-chevron-right"></i>
                     <NuxtLink class="linked" to="/about" :class="{ active: isHamburger }" @click="hamburger">ABOUT</NuxtLink>
                 </li>
                 <li class="nav-link">

@@ -8,17 +8,16 @@
                     <div class="video">
                         <div class="category">
                             <p class="text-dotted-2 text-center">{{ item.name }}</p>
-                            <NuxtLink :to="`/videos/${item.name.trim()}`" class="btn btn-primary">
+                            <NuxtLink :to="`/videos/${item.name.trim()}`" class="btn btn-primary" :title="`${item.name} View All`">
                                 View all
                             </NuxtLink>
                         </div>
                         <RevealAnimation class="thumbs-loop">
-                            <NuxtImg class="custom-image-prev" v-for="(image, index) in item.thumbnail" :key="index"
+                            <NuxtImg class="custom-image-prev" :data-direction="randomDirection()" v-for="(image, index) in item.thumbnail" :key="index"
                                 :src="`${URL}${image}`" :alt="item.name" loading="lazy" />
                         </RevealAnimation>
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -34,8 +33,6 @@ const randomDirection = () => {
 };
 
 const URL = 'https://arafatsarkar.com';
-const reelContainer = ref<HTMLElement | null>(null);
-
 interface FrontVideos {
     name: string;
     thumbnail: string[];
