@@ -54,6 +54,7 @@
             color: #fff;
             position: absolute;
             transition: all 0.5s ease;
+            z-index: $z-top;
 
             .text-dotted-2 {
               font-size: 2rem;

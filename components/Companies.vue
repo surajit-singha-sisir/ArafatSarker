@@ -1,6 +1,6 @@
 <template>
     <section class="f f-col gap-10 companies">
-        <h1 class="text-center">Collaborate Companies</h1><br>
+        <h1 class="text-center">Worked with Companies</h1><br>
         <div class="inner-comp">
             <div class="comp-item" v-for="item in data" :key="item.id">
                 <div class="w-100 h-100 f-center">

@@ -107,19 +107,17 @@ interface ContactInfo {
   phone: string;
 }
 
-// Static contact info from template
 const contactInfo: ContactInfo = {
   email: 'arafat@gmail.com',
   phone: '+88018548548',
 };
 
-// SEO configuration
 const seo = computed(() => ({
   title: 'Arafat Sarkar | Contacts',
   description: 'Get in touch with Arafat Sarkar, a professional cinematographer based in Bangladesh, for inquiries about videography, filmmaking, or collaborations.',
   keywords: 'Arafat Sarkar, cinematographer, contact, Bangladesh, videography, filmmaking, portfolio',
   canonical: 'https://arafatsarkar.com/contact',
-  ogImage: 'https://arafatsarkar.com/images/contact.png',
+  ogImage: 'https://arafatsarkar.com/images/profile.png',
 }));
 </script>
 

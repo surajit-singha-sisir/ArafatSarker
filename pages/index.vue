@@ -47,7 +47,6 @@
                 'https://www.linkedin.com/in/arafatsarkarofficial'
             ]" />
         </Head>
-        <!-- <NuxtOgImage component="OgImage" :props="{ title: 'Home Page' }" /> -->
         <Banner id="banner" />
         <Reels id="reels" />
         <Videos id="portfolio" />
@@ -65,9 +64,4 @@ const seo = {
     ogImage: "https://arafatsarkar.com/images/about.png"
 }
 
-defineOgImageComponent('NuxtSeo', {
-    title: 'Arafat Sarkar | Cinematographer Portfolio',
-    description: "Discover Arafat Sarkar's cinematography portfolio, featuring captivating reels, professional videos",
-    colorMode: 'white',
-});
 </script>

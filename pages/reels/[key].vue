@@ -1,12 +1,6 @@
 <template>
   <section class="reel-page">
     <div class="inner-reel-page">
-      <div class="showreel">
-        <div class="abs-center f-center f-col gap-20">
-          <h1 class="letter-spaced">{{ key }} Reels</h1>
-        </div>
-        <div class="overlay"></div>
-      </div>
       <br /><br />
 
       <div class="content-container">
