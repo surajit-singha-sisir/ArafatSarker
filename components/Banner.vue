@@ -59,7 +59,7 @@ interface Banners {
     subtitle3: string;
 }
 
-const { data: banner, error } = await useFetch<Banners>(`${BASE_URL}/api/api_banner`, {
+const { data: banner, error } = await useLazyFetch<Banners>(`${BASE_URL}/api/api_banner`, {
     method: 'GET',
 });
 
